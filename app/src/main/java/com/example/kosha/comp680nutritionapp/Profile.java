@@ -97,22 +97,22 @@ public class Profile extends AppCompatActivity {
         if (!inputValidation.isInputEditTextFilled(addressText, address, getString(R.string.error_message_email))) {
             return;
         }
-        if (!inputValidation.isInputEditTextFilled(textPhone, phone, getString(R.string.error_message_email))) {
+        if (!inputValidation.isInputEditTextFilled(textPhone, phone, getString(R.string.error_message_phone))) {
             return;
         }
-        if (!inputValidation.isInputEditTextFilled(textDob, dob, getString(R.string.error_message_email))) {
+        if (!inputValidation.isInputEditTextFilled(textDob, dob, getString(R.string.error_message_dob))) {
             return;
         }
-        if (!inputValidation.isInputEditTextFilled(textAge, age, getString(R.string.error_message_email))) {
+        if (!inputValidation.isInputEditTextFilled(textAge, age, getString(R.string.error_message_age))) {
             return;
         }
-        if (!inputValidation.isInputEditTextFilled(textWeight, weight, getString(R.string.error_message_email))) {
+        if (!inputValidation.isInputEditTextFilled(textWeight, weight, getString(R.string.error_message_weight))) {
             return;
         }
-        if (!inputValidation.isInputEditTextFilled(textHeight, height, getString(R.string.error_message_email))) {
+        if (!inputValidation.isInputEditTextFilled(textHeight, height, getString(R.string.error_message_height))) {
             return;
         }
-        if (!inputValidation.isInputEditTextFilled(textSex, sex, getString(R.string.error_message_email))) {
+        if (!inputValidation.isInputEditTextFilled(textSex, sex, getString(R.string.error_message_sex))) {
             return;
         }
 
