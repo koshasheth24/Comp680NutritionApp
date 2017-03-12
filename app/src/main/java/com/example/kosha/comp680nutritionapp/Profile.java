@@ -94,6 +94,8 @@ public class Profile extends AppCompatActivity {
 
     private void verifyFromHelper() {
     //ToDo: Validations to check fields on profile
+
+        //Check if filled
         if (!inputValidation.isInputEditTextFilled(addressText, address, getString(R.string.error_message_email))) {
             return;
         }
@@ -115,6 +117,8 @@ public class Profile extends AppCompatActivity {
         if (!inputValidation.isInputEditTextFilled(textSex, sex, getString(R.string.error_message_sex))) {
             return;
         }
+        // check format
+
 
     }
 
