@@ -96,7 +96,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     private boolean checkIfProfileExists() {
         String username= String.valueOf(textInputEditTextEmail.getText());
-        return databaseHelper.checkUserExists(username);
+        //return databaseHelper.checkUserExists(username);
+        return false;
 
     }
 

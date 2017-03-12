@@ -4,9 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.text.format.DateFormat;
+import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Kosha on 3/8/2017.
@@ -36,6 +43,31 @@ public class InputValidation {
     public boolean isInputEditTextEmail(TextInputEditText textInputEditText, TextInputLayout textInputLayout, String message) {
         String value = textInputEditText.getText().toString().trim();
         if (value.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(value).matches()) {
+            textInputLayout.setError(message);
+            hideKeyboardFrom(textInputEditText);
+            return false;
+        } else {
+            textInputLayout.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    public boolean isInputEditTextSex(TextInputEditText textInputEditText, TextInputLayout textInputLayout, String message) {
+        String value = textInputEditText.getText().toString().trim();
+        if (value.isEmpty() || value.length()>1 || !(value=="F" || value=="M")) {
+            textInputLayout.setError(message);
+            hideKeyboardFrom(textInputEditText);
+            return false;
+        } else {
+            textInputLayout.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+
+    public boolean isInputEditTextPhoneNumber(TextInputEditText textInputEditText, TextInputLayout textInputLayout, String message) {
+        String value = textInputEditText.getText().toString().trim();
+        if (value.isEmpty() || !android.util.Patterns.PHONE.matcher(value).matches()) {
             textInputLayout.setError(message);
             hideKeyboardFrom(textInputEditText);
             return false;
