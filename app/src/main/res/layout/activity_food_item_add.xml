@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollView"
+    android:background="@color/colorBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.kosha.comp680nutritionapp.FoodItemAddActivity">
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/add_food_item" />
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/AddQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="@string/enter_quantity"
+                android:textColorHint="@color/colorAccent"
+                tools:inputType="number" />
+
+    </android.support.design.widget.TextInputLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/appCompatButtonCalculate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorTextHint"
+            android:onClick="onClick"
+            android:text="@string/calculate" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/CurrentNutrients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/textCurrentNutrients"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="@string/current_nutrients" />
+        </android.support.design.widget.TextInputLayout>
+
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:stretchColumns="1">
+            <TableRow>
+                <TextView
+                    android:text="@string/calories"
+                    android:padding="6dip" />
+                <TextView
+
+                    android:gravity="end"
+                    android:padding="6dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="@string/protiens"
+                    android:padding="6dip" />
+                <TextView
+                    android:text=""
+                    android:gravity="end"
+                    android:padding="6dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="@string/fiber"
+                    android:padding="6dip" />
+                <TextView
+                    android:text=""
+                    android:gravity="end"
+                    android:padding="6dip" />
+            </TableRow>
+        </TableLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/appCompatDone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorTextHint"
+            android:onClick="onClick"
+            android:text="@string/done" />
+    </android.support.v7.widget.LinearLayoutCompat>
+
+</android.support.v4.widget.NestedScrollView>
