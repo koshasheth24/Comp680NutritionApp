@@ -195,4 +195,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return userCalCount;
     }
+
+    public User fetchUserDetails(int id, String email) {
+        //ToDo : select Query to fetch user details
+        return null;
+    }
 }

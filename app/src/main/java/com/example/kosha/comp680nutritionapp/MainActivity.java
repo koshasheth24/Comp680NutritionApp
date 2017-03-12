@@ -2,9 +2,6 @@ package com.example.kosha.comp680nutritionapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,9 +12,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import model.User;
+import model.UserCalorieCount;
+import sql.DatabaseHelper;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView greeting;
+    String email="";
+    DatabaseHelper databaseHelper;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +42,15 @@ public class MainActivity extends AppCompatActivity
         //main activity page-->Welcome Page
         greeting=(TextView)findViewById(R.id.Greeting);
         greeting.setText("Welcome User");
-
-
-
+        UserCalorieCount userCalCount=databaseHelper.fetchPreviousValue(id);
+        User user=databaseHelper.fetchUserDetails(id,email);
+        updateTableFields(userCalCount);
         //
+    }
+
+    private void updateTableFields(UserCalorieCount userCalCount) {
+
+
     }
 
     @Override
