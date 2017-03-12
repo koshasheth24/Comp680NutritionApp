@@ -161,7 +161,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean checkUserExists() {
+    public boolean checkUserExists(String username) {
         //ToDo : DB call to check if user exists
         return true;
     }
