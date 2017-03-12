@@ -1,6 +1,7 @@
 package com.example.kosha.comp680nutritionapp;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -93,6 +94,27 @@ public class Profile extends AppCompatActivity {
 
     private void verifyFromHelper() {
     //ToDo: Validations to check fields on profile
+        if (!inputValidation.isInputEditTextFilled(addressText, address, getString(R.string.error_message_email))) {
+            return;
+        }
+        if (!inputValidation.isInputEditTextFilled(textPhone, phone, getString(R.string.error_message_email))) {
+            return;
+        }
+        if (!inputValidation.isInputEditTextFilled(textDob, dob, getString(R.string.error_message_email))) {
+            return;
+        }
+        if (!inputValidation.isInputEditTextFilled(textAge, age, getString(R.string.error_message_email))) {
+            return;
+        }
+        if (!inputValidation.isInputEditTextFilled(textWeight, weight, getString(R.string.error_message_email))) {
+            return;
+        }
+        if (!inputValidation.isInputEditTextFilled(textHeight, height, getString(R.string.error_message_email))) {
+            return;
+        }
+        if (!inputValidation.isInputEditTextFilled(textSex, sex, getString(R.string.error_message_email))) {
+            return;
+        }
 
     }
 
