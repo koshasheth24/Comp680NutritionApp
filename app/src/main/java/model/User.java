@@ -22,6 +22,7 @@ public class User {
     private float max_cal;
     private float max_protien;
     private float max_fiber;
+    private float age;
 
     public String getUsername() {
         return username;
@@ -61,6 +62,14 @@ public class User {
 
     public void setWeight(float weight) {
         this.weight = weight;
+    }
+
+    public float getAge() {
+        return age;
+    }
+
+    public void setAge(float age) {
+        this.age = age;
     }
 
     public int getPhone() {

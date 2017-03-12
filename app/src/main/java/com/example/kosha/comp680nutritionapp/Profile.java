@@ -11,7 +11,10 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
+import java.util.Date;
+
 import Helpers.InputValidation;
+import model.User;
 import sql.DatabaseHelper;
 
 public class Profile extends AppCompatActivity {
@@ -40,6 +43,9 @@ public class Profile extends AppCompatActivity {
 
     private InputValidation inputValidation;
     private DatabaseHelper databaseHelper;
+    private User user;
+
+    private float max_cal,max_protien,max_fiber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +93,33 @@ public class Profile extends AppCompatActivity {
     public void onClick(View v) {
 
                 verifyFromHelper();
+                calculateRequiredValues();
+                populateUserObject();
+                databaseHelper.saveToUserTable(user);
                 Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(mainActivity);
 
+    }
+
+    private void calculateRequiredValues() {
+        // ToDo : logic to calculate required cal,fiber,protiens
+        max_cal=0;
+        max_fiber=0;
+        max_protien=0;
+
+    }
+
+    private void populateUserObject() {
+        user.setAddress(address.toString());
+        user.setDob(new Date(textDob.toString()));
+        user.setHeight((Float.parseFloat(textHeight.toString())));
+        user.setWeight(Float.parseFloat(textWeight.toString()));
+        user.setPhone(Integer.parseInt(textPhone.toString()));
+        user.setSex(textSex.toString());
+        user.setAge(Float.parseFloat(textAge.toString()));
+        user.setMax_cal(max_cal);
+        user.setMax_fiber(max_fiber);
+        user.setMax_protien(max_protien);
     }
 
     private void verifyFromHelper() {

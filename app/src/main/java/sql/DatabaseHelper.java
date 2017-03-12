@@ -165,4 +165,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //ToDo : DB call to check if user exists
         return true;
     }
+
+    public void saveToUserTable(User user) {
+        //ToDo : Insert profile details to user table
+    }
+
 }
