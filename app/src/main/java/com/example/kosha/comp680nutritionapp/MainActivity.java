@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity
             Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intentMain);
         } else if (id == R.id.profile) {
-            //Add display profile page
+            //ToDO :Add display profile page
 
         }
 
