@@ -5,7 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.design.widget.TextInputEditText;
+
+import java.util.ArrayList;
+
 import model.User;
+import model.UserCalorieCount;
 
 /**
  * Created by Kosha on 3/8/2017.
@@ -27,6 +32,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_USER_EMAIL + " TEXT," + COLUMN_USER_PASSWORD + " TEXT" + ")";
 
     private String DROP_USER_TABLE = "DROP TABLE IF EXISTS " + TABLE_USER;
+    private float max_cal,max_protien,max_fiber;
+    private UserCalorieCount userCalCount;
 
 
     public DatabaseHelper(Context context) {
@@ -170,4 +177,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //ToDo : Insert profile details to user table
     }
 
+    public void calculateRequiredValues(String textAge, String textHeight, String textWeight) {
+        // ToDo : logic to calculate required cal,fiber,protiens
+        max_cal=0;
+        max_fiber=0;
+        max_protien=0;
+        //send in arraylist
+    }
+
+
+    public void updateUserCalorieCountTable(UserCalorieCount userCalCount) {
+        //ToDo : updatequery for usercaloriecounttable
+    }
+
+    public UserCalorieCount fetchPreviousValue(int id) {
+        //ToDo : Select query for userCalCount
+
+        return userCalCount;
+    }
 }

@@ -77,13 +77,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.appCompatButtonLogin:
-                if(checkIfProfileExists()){
-                    // Navigate to Main
-                    Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intentMain);
-                    break;
-                }
-                verifyFromSQLite();
+                verifyandNavigate();
                 break;
             case R.id.textViewLinkRegister:
                     // Navigate to RegisterActivity
@@ -94,15 +88,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    private boolean checkIfProfileExists() {
-        String username= String.valueOf(textInputEditTextEmail.getText());
-        //return databaseHelper.checkUserExists(username);
-        return false;
 
-    }
-
-
-    private void verifyFromSQLite() {
+    private void verifyandNavigate() {
         if (!inputValidation.isInputEditTextFilled(textInputEditTextEmail, textInputLayoutEmail, getString(R.string.error_message_email))) {
             return;
         }
@@ -116,9 +103,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         if (databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim()
                 , textInputEditTextPassword.getText().toString().trim())) {
 
-
-            Intent accountsIntent = new Intent(activity, Profile.class);
-            startActivity(accountsIntent);
+            if(!databaseHelper.checkUserExists(textInputEditTextEmail.toString())) {
+                Intent profileIntent = new Intent(activity, Profile.class);
+                startActivity(profileIntent);
+            }else {
+                Intent mainIntent=new Intent(activity, MainActivity.class);
+                startActivity(mainIntent);
+            }
 
 
         } else {

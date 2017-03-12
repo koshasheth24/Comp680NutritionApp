@@ -47,6 +47,7 @@ public class Profile extends AppCompatActivity {
 
     private float max_cal,max_protien,max_fiber;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +94,8 @@ public class Profile extends AppCompatActivity {
     public void onClick(View v) {
 
                 verifyFromHelper();
-                calculateRequiredValues();
+                //Recieve in array list
+                databaseHelper.calculateRequiredValues(textAge.toString(),textHeight.toString(),textWeight.toString());
                 populateUserObject();
                 databaseHelper.saveToUserTable(user);
                 Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
@@ -101,13 +103,6 @@ public class Profile extends AppCompatActivity {
 
     }
 
-    private void calculateRequiredValues() {
-        // ToDo : logic to calculate required cal,fiber,protiens
-        max_cal=0;
-        max_fiber=0;
-        max_protien=0;
-
-    }
 
     private void populateUserObject() {
         user.setAddress(address.toString());
@@ -123,7 +118,6 @@ public class Profile extends AppCompatActivity {
     }
 
     private void verifyFromHelper() {
-    //ToDo: Validations to check fields on profile
 
         //Check if filled
         if (!inputValidation.isInputEditTextFilled(addressText, address, getString(R.string.error_message_email))) {
