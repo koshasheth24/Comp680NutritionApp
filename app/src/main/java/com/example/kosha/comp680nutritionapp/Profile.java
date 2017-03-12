@@ -148,7 +148,14 @@ public class Profile extends AppCompatActivity {
             return;
         }
         // check format
+        if(!inputValidation.isInputEditTextPhoneNumber(textPhone,phone,getString(R.string.error_message_weight))){
+           return;
+        }
+        if(!inputValidation.isInputEditTextSex(textSex,sex,getString(R.string.error_message_weight))){
+            return;
+        }
 
+        //ToDo : add date format check
 
     }
 
