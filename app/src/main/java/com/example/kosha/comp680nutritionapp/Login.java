@@ -77,14 +77,27 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.appCompatButtonLogin:
+                if(checkIfProfileExists()){
+                    // Navigate to Main
+                    Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intentMain);
+                    break;
+                }
                 verifyFromSQLite();
                 break;
             case R.id.textViewLinkRegister:
-                // Navigate to RegisterActivity
-                Intent intentRegister = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(intentRegister);
-                break;
+                    // Navigate to RegisterActivity
+                    Intent intentRegister = new Intent(getApplicationContext(), RegisterActivity.class);
+                    startActivity(intentRegister);
+                    break;
+
         }
+    }
+
+    private boolean checkIfProfileExists() {
+        String username= String.valueOf(textInputEditTextEmail.getText());
+        return databaseHelper.checkUserExists();
+
     }
 
 

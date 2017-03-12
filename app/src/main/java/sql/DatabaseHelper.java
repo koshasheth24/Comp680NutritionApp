@@ -160,4 +160,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_USER_TABLE);
 
     }
+
+    public boolean checkUserExists() {
+        //ToDo : DB call to check if user exists
+        return true;
+    }
 }
