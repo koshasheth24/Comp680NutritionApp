@@ -1,9 +1,12 @@
 package sql;
-
-
 import android.content.Context;
+import android.os.AsyncTask;
+import android.os.StrictMode;
 
-import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.*;
+
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import model.User;
 import model.UserCalorieCount;
@@ -12,7 +15,7 @@ import model.UserCalorieCount;
  * Created by Kosha on 3/8/2017.
  */
 
-public class DatabaseHelper{
+public class DatabaseHelper extends AsyncTask {
 
 
     private static final int DATABASE_VERSION = 1;
@@ -20,7 +23,9 @@ public class DatabaseHelper{
     private static final String TABLE_USER = "user_info";
     private static final String USER_PERDAY_COUNTER="user_perday_counter";
     private static final String FETCH_NUTRIENTS="fetch_nutrients";
-
+    String url="jdbc:mysql://76.174.25.49:3306/nutrients";
+    String userCon="kosha";
+    String passwordCon="kosha";
 
 
     private float max_cal,max_protien,max_fiber;
@@ -32,16 +37,30 @@ public class DatabaseHelper{
     }
 
     public void getConnection(){
-        Connection connection=null;
+        Connection con=null;
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            con = (Connection) DriverManager.getConnection(url, userCon, passwordCon);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 
     public void addUser(User user) {
-    //ToDo: insert query usr able
+    //ToDo: insert query user table
 
     }
-
-
 
 
     public void updateUser(User user) {
@@ -52,8 +71,6 @@ public class DatabaseHelper{
     public void deleteUser(User user) {
         //ToDO: Delete User query
     }
-
-
 
 
     public boolean checkUser(String email, String password) {
@@ -98,5 +115,12 @@ public class DatabaseHelper{
 
     public boolean checkUser(String trim) {
         return true;
+    }
+
+
+    @Override
+    protected Object doInBackground(Object[] params) {
+        getConnection();
+        return null;
     }
 }

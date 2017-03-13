@@ -1,5 +1,6 @@
 package com.example.kosha.comp680nutritionapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
@@ -37,7 +38,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
-
+        databaseHelper=new DatabaseHelper(activity);
+        databaseHelper.getConnection();
         initViews();
         initListeners();
         initObjects();

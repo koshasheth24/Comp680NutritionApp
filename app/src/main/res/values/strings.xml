@@ -50,4 +50,6 @@
     <string name="enter_quantity">Enter Quantity</string>
     <string name="calculate">Calculate</string>
     <string name="done">Done</string>
+    <string name="search">Search items</string>
+
 </resources>
