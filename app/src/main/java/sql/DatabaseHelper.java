@@ -1,6 +1,5 @@
 package sql;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.StrictMode;
 
 import com.mysql.jdbc.*;
@@ -139,15 +138,40 @@ public class DatabaseHelper{
     }
 
     public void saveToUserTable(User user) {
-        //ToDo : Insert profile details to user table
+        Connection con = getConnection();
+        try {
+            Statement stmt = (Statement) con.createStatement();
+            ResultSet rs;
+            String sql = "INSERT INTO user_info"
+                    + "(age, sex, height, weight, address, dob, contact, max_cal, max_protein, max_fiber) " + "VALUES"
+                    + "("
+                    +"'"+user.getAge()+"',"
+                    +"'"+user.getSex()+"',"
+                    +"'"+user.getHeight()+"',"
+                    +"'"+user.getWeight()+"',"
+                    +"'"+user.getAddress()+"',"
+                    +"'"+user.getDob()+"',"
+                    +"'"+user.getPhone()+"',"
+                    +"'"+user.getMax_cal()+"',"
+                    +"'"+user.getMax_protien()+"',"
+                    +"'"+user.getMax_fiber()+"'"+")"
+                    +" WHERE user_name='"+user.getEmail()+"'";
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void calculateRequiredValues(String textAge, String textHeight, String textWeight) {
+    public User calculateRequiredValues(String textAge, String textHeight, String textWeight,User user) {
         // ToDo : logic to calculate required cal,fiber,protiens
-        max_cal=0;
-        max_fiber=0;
-        max_protien=0;
+        max_cal=45;
+        max_fiber=45;
+        max_protien=34;
+        user.setMax_protien(max_protien);
+        user.setMax_fiber(max_fiber);
+        user.setMax_cal(max_cal);
         //send in arraylist
+        return user;
     }
 
 

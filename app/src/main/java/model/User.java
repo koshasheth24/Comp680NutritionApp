@@ -24,6 +24,10 @@ public class User {
     private float max_fiber;
     private float age;
 
+    public User() {
+
+    }
+
     public String getUsername() {
         return username;
     }

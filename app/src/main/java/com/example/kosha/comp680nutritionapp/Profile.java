@@ -11,6 +11,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import Helpers.InputValidation;
@@ -95,8 +96,8 @@ public class Profile extends AppCompatActivity {
 
                 verifyFromHelper();
                 //Recieve in array list
-                databaseHelper.calculateRequiredValues(textAge.toString(),textHeight.toString(),textWeight.toString());
                 populateUserObject();
+                user=databaseHelper.calculateRequiredValues(textAge.toString(),textHeight.toString(),textWeight.toString(),user);
                 databaseHelper.saveToUserTable(user);
                 Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(mainActivity);
@@ -105,13 +106,15 @@ public class Profile extends AppCompatActivity {
 
 
     private void populateUserObject() {
-        user.setAddress(address.toString());
-        user.setDob(new Date(textDob.toString()));
-        user.setHeight((Float.parseFloat(textHeight.toString())));
-        user.setWeight(Float.parseFloat(textWeight.toString()));
-        user.setPhone(Integer.parseInt(textPhone.toString()));
-        user.setSex(textSex.toString());
-        user.setAge(Float.parseFloat(textAge.toString()));
+        user=new User();
+        user.setEmail("a@gmail.com");
+        user.setAddress(addressText.getEditableText().toString());
+        user.setDob(new Date((new SimpleDateFormat("mm-yy-dddd")).format(textDob.getEditableText().toString())));
+        user.setHeight((Float.parseFloat(textHeight.getEditableText().toString())));
+        user.setWeight(Float.parseFloat(textWeight.getEditableText().toString()));
+        user.setPhone(Integer.parseInt(textPhone.getEditableText().toString()));
+        user.setSex(textSex.getEditableText().toString());
+        user.setAge(Float.parseFloat(textAge.getEditableText().toString()));
         user.setMax_cal(max_cal);
         user.setMax_fiber(max_fiber);
         user.setMax_protien(max_protien);
