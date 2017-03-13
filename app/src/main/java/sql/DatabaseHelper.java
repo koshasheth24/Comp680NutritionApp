@@ -91,4 +91,8 @@ public class DatabaseHelper{
         //ToDo : select Query to fetch user details
         return null;
     }
+
+    public boolean checkUser(String trim) {
+        return true;
+    }
 }
