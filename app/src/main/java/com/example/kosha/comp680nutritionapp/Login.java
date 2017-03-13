@@ -1,6 +1,5 @@
 package com.example.kosha.comp680nutritionapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
@@ -103,7 +102,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         if (databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim()
                 , textInputEditTextPassword.getText().toString().trim())) {
 
-            if(!databaseHelper.checkUserExists(textInputEditTextEmail.toString())) {
+            if(!databaseHelper.checkUserProfileExists(textInputEditTextEmail.toString())) {
                 Intent profileIntent = new Intent(activity, Profile.class);
                 startActivity(profileIntent);
             }else {

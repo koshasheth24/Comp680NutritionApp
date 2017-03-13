@@ -58,7 +58,17 @@ public class DatabaseHelper{
 
 
     public void addUser(User user) {
-    //ToDo: insert query user table
+        Connection con = getConnection();
+        try {
+            Statement stmt = (Statement) con.createStatement();
+            ResultSet rs;
+            String sql = "INSERT INTO user_info"
+                    + "(user_name, password) " + "VALUES"
+                    + "("+"'"+user.getEmail()+"',"+"'"+user.getPassword()+"')";
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -75,14 +85,57 @@ public class DatabaseHelper{
 
     public boolean checkUser(String email, String password) {
 
-        //ToDo: check login details query
-        return true;
+        Connection con = getConnection();
+        boolean userExists = false;
+        try {
+            Statement stmt = (Statement) con.createStatement();
+            ResultSet rs;
+            String sql = "SELECT id, user_name, password FROM user_info where user_name="+
+                    "'"+ email+ "'" +" AND password="+"'"+password+ "'";
+            rs= (ResultSet) stmt.executeQuery(sql);
+            if(getSize(rs)== 1){
+                userExists =  true;
+            }else{
+                userExists = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userExists;
+    }
+
+    private int getSize(ResultSet rs) {
+        int n=0;
+        try {
+            while(rs.next()){
+                n+=1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return n;
     }
 
 
-    public boolean checkUserExists(String username) {
-        //ToDo : DB call to check if user exists
-        return true;
+    public boolean checkUserProfileExists(String username) {
+        Connection con = getConnection();
+        boolean userExists = false;
+        try {
+            Statement stmt = (Statement) con.createStatement();
+            ResultSet rs;
+            String sql = "SELECT age, weight FROM user_info where user_name="+
+                    "'"+ username+ "'" ;
+            rs= (ResultSet) stmt.executeQuery(sql);
+            if(getSize(rs)== 1){
+                userExists =  true;
+            }else{
+                userExists = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userExists;
     }
 
     public void saveToUserTable(User user) {
@@ -114,7 +167,7 @@ public class DatabaseHelper{
     }
 
     public boolean checkUser(String trim) {
-        return true;
+        return false;
     }
 
 
