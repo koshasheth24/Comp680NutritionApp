@@ -1,23 +1,18 @@
 package model;
 
+import java.util.Date;
+
 /**
  * Created by Kosha on 3/10/2017.
  */
 
 public class ItemNutrient {
-    private String category;
+
     private String item;
     private float calories;
     private float protiens;
     private float fiber;
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
     public String getItem() {
         return item;
