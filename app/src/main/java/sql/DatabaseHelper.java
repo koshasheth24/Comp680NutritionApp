@@ -141,7 +141,6 @@ public class DatabaseHelper{
         Connection con = getConnection();
         try {
             Statement stmt = (Statement) con.createStatement();
-            ResultSet rs;
             String sql = "INSERT INTO user_info"
                     + "(age, sex, height, weight, address, dob, contact, max_cal, max_protein, max_fiber) " + "VALUES"
                     + "("

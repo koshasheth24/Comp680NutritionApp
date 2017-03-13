@@ -18,7 +18,7 @@ public class User {
     private float height;
     private float weight;
     private int phone;
-    private Date dob;
+    private String dob;
     private float max_cal;
     private float max_protien;
     private float max_fiber;
@@ -84,11 +84,11 @@ public class User {
         this.phone = phone;
     }
 
-    public Date getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 

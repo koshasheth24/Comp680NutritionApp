@@ -1,18 +1,17 @@
 package com.example.kosha.comp680nutritionapp;
 
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
+import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import Helpers.InputValidation;
 import model.User;
@@ -109,7 +108,7 @@ public class Profile extends AppCompatActivity {
         user=new User();
         user.setEmail("a@gmail.com");
         user.setAddress(addressText.getEditableText().toString());
-        user.setDob(new Date((new SimpleDateFormat("mm-yy-dddd")).format(textDob.getEditableText().toString())));
+        user.setDob(textDob.getEditableText().toString());
         user.setHeight((Float.parseFloat(textHeight.getEditableText().toString())));
         user.setWeight(Float.parseFloat(textWeight.getEditableText().toString()));
         user.setPhone(Integer.parseInt(textPhone.getEditableText().toString()));
