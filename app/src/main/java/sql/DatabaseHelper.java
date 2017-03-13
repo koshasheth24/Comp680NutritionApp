@@ -15,7 +15,7 @@ import model.UserCalorieCount;
  * Created by Kosha on 3/8/2017.
  */
 
-public class DatabaseHelper extends AsyncTask {
+public class DatabaseHelper{
 
 
     private static final int DATABASE_VERSION = 1;
@@ -118,9 +118,7 @@ public class DatabaseHelper extends AsyncTask {
     }
 
 
-    @Override
-    protected Object doInBackground(Object[] params) {
-        getConnection();
-        return null;
-    }
+
+
+
 }
