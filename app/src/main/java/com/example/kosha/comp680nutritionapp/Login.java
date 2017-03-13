@@ -38,8 +38,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
-        databaseHelper=new DatabaseHelper(activity);
-        databaseHelper.getConnection();
         initViews();
         initListeners();
         initObjects();
