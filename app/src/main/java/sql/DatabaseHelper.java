@@ -36,7 +36,7 @@ public class DatabaseHelper extends AsyncTask {
         //super(context,DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public void getConnection(){
+    public Connection getConnection(){
         Connection con=null;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
@@ -52,7 +52,7 @@ public class DatabaseHelper extends AsyncTask {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        return con;
 
     }
 
