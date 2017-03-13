@@ -1,13 +1,9 @@
 package sql;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.support.design.widget.TextInputEditText;
 
-import java.util.ArrayList;
+import android.content.Context;
+
+import com.mysql.jdbc.Connection;
 
 import model.User;
 import model.UserCalorieCount;
@@ -20,8 +16,12 @@ public class DatabaseHelper{
 
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "UserManager.db";
-    private static final String TABLE_USER = "user";
+    private static final String DATABASE_NAME = "nutrients";
+    private static final String TABLE_USER = "user_info";
+    private static final String USER_PERDAY_COUNTER="user_perday_counter";
+    private static final String FETCH_NUTRIENTS="fetch_nutrients";
+
+
 
     private float max_cal,max_protien,max_fiber;
     private UserCalorieCount userCalCount;
@@ -29,6 +29,10 @@ public class DatabaseHelper{
 
     public DatabaseHelper(Context context) {
         //super(context,DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public void getConnection(){
+        Connection connection=null;
     }
 
 
