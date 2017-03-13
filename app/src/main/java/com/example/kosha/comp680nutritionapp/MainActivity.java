@@ -44,11 +44,12 @@ public class MainActivity extends AppCompatActivity
         greeting.setText("Welcome User");
         UserCalorieCount userCalCount=databaseHelper.fetchPreviousValue(id);
         User user=databaseHelper.fetchUserDetails(id,email);
-        updateTableFields(userCalCount);
+        updateTableFields(userCalCount,user);
         //
     }
 
-    private void updateTableFields(UserCalorieCount userCalCount) {
+    private void updateTableFields(UserCalorieCount userCalCount, User user) {
+        //ToDo : update table fields
 
 
     }
