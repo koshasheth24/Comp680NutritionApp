@@ -44,7 +44,7 @@ public class Profile extends AppCompatActivity {
     private InputValidation inputValidation;
     private DatabaseHelper databaseHelper;
     private User user;
-
+    String name,email,psswd;
     private Double max_cal= Double.valueOf(0),max_protien= Double.valueOf(0),max_fiber= Double.valueOf(0);
 
 
@@ -94,6 +94,9 @@ public class Profile extends AppCompatActivity {
     public void onClick(View v) {
 
                 verifyFromHelper();
+                email = getIntent().getStringExtra("EMAIL");
+                psswd=getIntent().getStringExtra("PSSWD");
+                name=getIntent().getStringExtra("NAME");
                 //Recieve in array list
                 populateUserObject();
                 user=databaseHelper.calculateRequiredValues(textAge.toString(),textHeight.toString(),textWeight.toString(),user);
@@ -106,7 +109,9 @@ public class Profile extends AppCompatActivity {
 
     private void populateUserObject() {
         user=new User();
-        user.setEmail("a@gmail.com");
+        user.setUsername(name);
+        user.setPassword(psswd);
+        user.setEmail(email);
         user.setAddress(addressText.getEditableText().toString());
         user.setDob(textDob.getEditableText().toString());
         user.setHeight(Double.parseDouble(textHeight.getEditableText().toString()));

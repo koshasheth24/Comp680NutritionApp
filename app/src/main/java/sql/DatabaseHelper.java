@@ -36,6 +36,10 @@ public class DatabaseHelper{
         //super(context,DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    public DatabaseHelper() {
+
+    }
+
     public Connection getConnection(){
         Connection con=null;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -256,7 +260,20 @@ public class DatabaseHelper{
     }
 
 
-
-
-
+    public int getId(String email) {
+        Connection con=getConnection();
+        String getIdQuery="SELECT id FROM user_info WHERE user_name=?";
+        int id=0;
+        try {
+            PreparedStatement getIdSQL =(PreparedStatement) con.prepareStatement(getIdQuery);
+            getIdSQL.setString(1,email);
+            ResultSet rs= (ResultSet) getIdSQL.executeQuery();
+            while(rs.next()){
+                id=rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
 }

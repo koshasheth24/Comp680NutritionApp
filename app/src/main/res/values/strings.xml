@@ -51,5 +51,7 @@
     <string name="calculate">Calculate</string>
     <string name="done">Done</string>
     <string name="search">Search items</string>
+    <string name="either_you_run_the_day_or_the_day_runs_you">"Either you run the day, or the day runs you"</string>
+    <string name="quote_of_the_day">Quote of the Day</string>
 
 </resources>

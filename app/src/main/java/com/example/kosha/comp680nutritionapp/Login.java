@@ -32,6 +32,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private InputValidation inputValidation;
     private DatabaseHelper databaseHelper;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,19 +104,23 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         if (databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim()
                 , textInputEditTextPassword.getText().toString().trim())) {
 
-            if(!databaseHelper.checkUserProfileExists(textInputEditTextEmail.toString())) {
-                Intent profileIntent = new Intent(activity, Profile.class);
-                startActivity(profileIntent);
-            }else {
+
                 Intent mainIntent=new Intent(activity, MainActivity.class);
+                mainIntent.putExtra("EMAIL",textInputEditTextEmail.getText().toString().trim());
+                mainIntent.putExtra("ID",String.valueOf(getID()));
                 startActivity(mainIntent);
-            }
+
 
 
         } else {
             // Show success message that record is wrong
             Snackbar.make(nestedScrollView, getString(R.string.error_valid_email_password), Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    private int getID() {
+        return databaseHelper.getId(textInputEditTextEmail.getText().toString().trim());
+
     }
 
 }

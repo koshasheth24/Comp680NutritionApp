@@ -19,8 +19,8 @@ import sql.DatabaseHelper;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView greeting;
-    String email="";
-    DatabaseHelper databaseHelper;
+    String email="",idStr="";
+    DatabaseHelper databaseHelper=new DatabaseHelper();
     int id;
 
     @Override
@@ -40,10 +40,12 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //main activity page-->Welcome Page
+        email = getIntent().getStringExtra("EMAIL");
+        idStr=getIntent().getStringExtra("ID");
         greeting=(TextView)findViewById(R.id.Greeting);
         greeting.setText("Welcome User");
-        UserCalorieCount userCalCount=databaseHelper.fetchPreviousValue(id);
-        User user=databaseHelper.fetchUserDetails(id);
+        UserCalorieCount userCalCount=databaseHelper.fetchPreviousValue(Integer.valueOf(idStr));
+        User user=databaseHelper.fetchUserDetails(Integer.valueOf(idStr));
         updateTableFields(userCalCount,user);
         //
     }
