@@ -15,14 +15,14 @@ public class User {
     private String username;
     private String address;
     private String sex;
-    private float height;
-    private float weight;
-    private int phone;
+    private double height;
+    private double weight;
+    private String phone;
     private String dob;
-    private float max_cal;
-    private float max_protien;
-    private float max_fiber;
-    private float age;
+    private double max_cal;
+    private double max_protien;
+    private double max_fiber;
+    private int age;
 
     public User() {
 
@@ -52,35 +52,35 @@ public class User {
         this.sex = sex;
     }
 
-    public float getHeight() {
+    public double getHeight() {
         return height;
     }
 
-    public void setHeight(float height) {
+    public void setHeight(Double height) {
         this.height = height;
     }
 
-    public float getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
-    public float getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(float age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -92,27 +92,27 @@ public class User {
         this.dob = dob;
     }
 
-    public float getMax_cal() {
+    public double getMax_cal() {
         return max_cal;
     }
 
-    public void setMax_cal(float max_cal) {
+    public void setMax_cal(Double max_cal) {
         this.max_cal = max_cal;
     }
 
-    public float getMax_protien() {
+    public double getMax_protien() {
         return max_protien;
     }
 
-    public void setMax_protien(float max_protien) {
+    public void setMax_protien(Double max_protien) {
         this.max_protien = max_protien;
     }
 
-    public float getMax_fiber() {
+    public double getMax_fiber() {
         return max_fiber;
     }
 
-    public void setMax_fiber(float max_fiber) {
+    public void setMax_fiber(Double max_fiber) {
         this.max_fiber = max_fiber;
     }
 

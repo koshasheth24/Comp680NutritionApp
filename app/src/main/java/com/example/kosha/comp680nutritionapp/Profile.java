@@ -45,7 +45,7 @@ public class Profile extends AppCompatActivity {
     private DatabaseHelper databaseHelper;
     private User user;
 
-    private float max_cal,max_protien,max_fiber;
+    private Double max_cal= Double.valueOf(0),max_protien= Double.valueOf(0),max_fiber= Double.valueOf(0);
 
 
     @Override
@@ -109,11 +109,11 @@ public class Profile extends AppCompatActivity {
         user.setEmail("a@gmail.com");
         user.setAddress(addressText.getEditableText().toString());
         user.setDob(textDob.getEditableText().toString());
-        user.setHeight((Float.parseFloat(textHeight.getEditableText().toString())));
-        user.setWeight(Float.parseFloat(textWeight.getEditableText().toString()));
-        user.setPhone(Integer.parseInt(textPhone.getEditableText().toString()));
+        user.setHeight(Double.parseDouble(textHeight.getEditableText().toString()));
+        user.setWeight(Double.parseDouble(textWeight.getEditableText().toString()));
+        user.setPhone(textPhone.getEditableText().toString());
         user.setSex(textSex.getEditableText().toString());
-        user.setAge(Float.parseFloat(textAge.getEditableText().toString()));
+        user.setAge(Integer.parseInt(textAge.getEditableText().toString()));
         user.setMax_cal(max_cal);
         user.setMax_fiber(max_fiber);
         user.setMax_protien(max_protien);

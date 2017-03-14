@@ -4,6 +4,7 @@ import android.os.StrictMode;
 
 import com.mysql.jdbc.*;
 
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -27,7 +28,7 @@ public class DatabaseHelper{
     String passwordCon="kosha";
 
 
-    private float max_cal,max_protien,max_fiber;
+    private double max_cal,max_protien,max_fiber;
     private UserCalorieCount userCalCount;
 
 
@@ -140,22 +141,24 @@ public class DatabaseHelper{
     public void saveToUserTable(User user) {
         Connection con = getConnection();
         try {
-            Statement stmt = (Statement) con.createStatement();
-            String sql = "INSERT INTO user_info"
-                    + "(age, sex, height, weight, address, dob, contact, max_cal, max_protein, max_fiber) " + "VALUES"
-                    + "("
-                    +"'"+user.getAge()+"',"
-                    +"'"+user.getSex()+"',"
-                    +"'"+user.getHeight()+"',"
-                    +"'"+user.getWeight()+"',"
-                    +"'"+user.getAddress()+"',"
-                    +"'"+user.getDob()+"',"
-                    +"'"+user.getPhone()+"',"
-                    +"'"+user.getMax_cal()+"',"
-                    +"'"+user.getMax_protien()+"',"
-                    +"'"+user.getMax_fiber()+"'"+")"
+            String sql = "UPDATE user_info set age=?, sex=?, height=?, weight=?," +
+                    " address=?, dob=?, contact=?, max_cal=?, max_protein=?, max_fiber=? "
                     +" WHERE user_name='"+user.getEmail()+"'";
-            stmt.executeUpdate(sql);
+
+            PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
+            stmt.setInt(1,user.getAge());
+            stmt.setString(2,user.getSex());
+            stmt.setDouble(3,user.getHeight());
+            stmt.setDouble(4,user.getWeight());
+            stmt.setString(5,user.getAddress());
+
+            stmt.setDate(6, Date.valueOf(user.getDob()));
+            stmt.setInt(7, Integer.parseInt(user.getPhone()));
+            stmt.setDouble(8,user.getMax_cal());
+            stmt.setDouble(9,user.getMax_protien());
+            stmt.setDouble(10,user.getMax_fiber());
+
+            stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
