@@ -99,7 +99,7 @@ public class Profile extends AppCompatActivity {
                 name=getIntent().getStringExtra("NAME");
                 //Recieve in array list
                 populateUserObject();
-                user=databaseHelper.calculateRequiredValues(textAge.toString(),textHeight.toString(),textWeight.toString(),user);
+                user=databaseHelper.calculateRequiredValues(user);
                 databaseHelper.saveToUserTable(user);
                 Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(mainActivity);

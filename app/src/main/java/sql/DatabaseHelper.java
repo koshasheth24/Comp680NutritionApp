@@ -7,12 +7,13 @@ import com.mysql.jdbc.*;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Objects;
 
 import model.User;
 import model.UserCalorieCount;
 
 /**
- * Created by Kosha on 3/8/2017.
+ * Created by Kosha and Atil on 3/13/2017.
  */
 
 public class DatabaseHelper{
@@ -172,15 +173,42 @@ public class DatabaseHelper{
         }
     }
 
-    public User calculateRequiredValues(String textAge, String textHeight, String textWeight,User user) {
+    public User calculateRequiredValues(User user) {
         // ToDo : logic to calculate required cal,fiber,protiens
-        max_cal=45;
-        max_fiber=45;
-        max_protien=34;
+        Double BMR=0.0;
+        if(user.getSex().compareTo("M")==1 || user.getSex().compareTo("m")==1){
+            BMR= (10*user.getWeight()) + (6.25*0.033*user.getHeight())-(5*user.getAge()) + 5;
+        }
+        else if(user.getSex().compareTo("F")==1 || user.getSex().compareTo("f")==1){
+            BMR= (10*user.getWeight()) + (6.25*0.033*user.getHeight())-(5*user.getAge()) - 161;
+        }
+
+        max_cal=BMR*1.275;
+        max_protien=user.getWeight()*1.275;
+
+        if(user.getSex().compareTo("M")==1 || user.getSex().compareTo("m")==1){
+            if(user.getAge()<50){
+                max_fiber=38;
+            }
+            else if(user.getAge()>=50){
+                max_fiber=30;
+            }
+        }
+        else if(user.getSex().compareTo("F")==1 || user.getSex().compareTo("f")==1){
+            if(user.getAge()<50){
+                max_fiber=25;
+            }
+            else if(user.getAge()>=50){
+                max_fiber=21;
+            }
+        }
+
+
+
         user.setMax_protien(max_protien);
         user.setMax_fiber(max_fiber);
         user.setMax_cal(max_cal);
-        //send in arraylist
+
         return user;
     }
 
