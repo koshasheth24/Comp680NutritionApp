@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity
         greeting=(TextView)findViewById(R.id.Greeting);
         greeting.setText("Welcome User");
         UserCalorieCount userCalCount=databaseHelper.fetchPreviousValue(id);
-        User user=databaseHelper.fetchUserDetails(id,email);
+        User user=databaseHelper.fetchUserDetails(id);
         updateTableFields(userCalCount,user);
         //
     }

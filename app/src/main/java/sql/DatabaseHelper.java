@@ -58,8 +58,9 @@ public class DatabaseHelper{
 
 
     public void addUser(User user) {
-        Connection con = getConnection();
+
         try {
+            Connection con = getConnection();
             Statement stmt = (Statement) con.createStatement();
             ResultSet rs;
             String sql = "INSERT INTO user_info"
@@ -73,13 +74,16 @@ public class DatabaseHelper{
     }
 
 
-    public void updateUser(User user) {
-        //ToDo :update user query
-    }
-
-
     public void deleteUser(User user) {
-        //ToDO: Delete User query
+        try{
+            Connection con = getConnection();
+            String sql ="DELETE FROM user_info WHERE id=" + user.getId();
+            PreparedStatement stmt= (PreparedStatement) con.prepareStatement(sql);
+            stmt.executeUpdate();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
 
@@ -178,22 +182,77 @@ public class DatabaseHelper{
 
 
     public void updateUserCalorieCountTable(UserCalorieCount userCalCount) {
-        //ToDo : updatequery for usercaloriecounttable
+
+        Connection con= getConnection();
+        try{
+
+            String sql = "UPDATE user_perday_counter SET curr_cal="
+                    + userCalCount.getTotal_cal() + ","
+                    + userCalCount.getTotal_protien()
+                    + "," + userCalCount.getTotal_fiber()
+                    + "WHERE id = " + userCalCount.getId();
+            PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
+            stmt.executeUpdate();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public UserCalorieCount fetchPreviousValue(int id) {
-        //ToDo : Select query for userCalCount
+
+        UserCalorieCount userCalCount = new UserCalorieCount();
+        Connection con = getConnection();
+        try{
+            String sql ="SELECT curr_cal, curr_proteins, curr_fiber FROM user_perday_counter WHERE id=" + id;
+
+            PreparedStatement stmt= (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs= (ResultSet) stmt.executeQuery();
+            userCalCount.setTotal_cal (rs.getDouble("curr_cal"));
+            userCalCount.setTotal_fiber(rs.getDouble("curr_fiber"));
+            userCalCount.setTotal_protien(rs.getDouble("curr_protein"));
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
 
         return userCalCount;
     }
 
-    public User fetchUserDetails(int id, String email) {
-        //ToDo : select Query to fetch user details
-        return null;
+    public User fetchUserDetails(int id) {
+
+        User user= new User();
+       try {
+           Connection con = getConnection();
+           String sql = "SELECT max_cal, max_protein, max_fiber FROM user_info WHERE id=" + id;
+           PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
+           ResultSet rs = (ResultSet) stmt.executeQuery();
+           user.setMax_cal(rs.getDouble("max_cal"));
+           user.setMax_fiber(rs.getDouble("max_fiber"));
+           user.setMax_protien(rs.getDouble("max_protein"));
+
+       }
+       catch(SQLException e){
+           e.printStackTrace();;
+       }
+
+        return user;
     }
 
-    public boolean checkUser(String trim) {
-        return false;
+    public boolean checkUser(String email) {
+        try {
+            Connection con = getConnection();
+            String sql = "SELECT  id FROM user_info WHERE user_name=" + email;
+            PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs = (ResultSet) stmt.executeQuery();
+            if(getSize(rs)==1){
+                return true;
+            }
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+            return false;
     }
 
 
