@@ -12,7 +12,7 @@
     <string name="error_message_age">Enter Age</string>
     <string name="error_message_password">Enter Password</string>
     <string name="error_message_address">Enter Address</string>
-    <string name="error_message_dob">Enter Date of birth</string>
+    <string name="error_message_dob">Enter Date of birth (YYYY-MM-DD)</string>
     <string name="error_message_height">Enter Height</string>
     <string name="error_message_weight">Enter Weight</string>
     <string name="error_message_sex">Enter Sex</string>
@@ -29,7 +29,7 @@
     <string name="age">Age</string>
     <string name="weight">Weight</string>
     <string name="address">Address</string>
-    <string name="date_of_birth">Date of Birth</string>
+    <string name="date_of_birth">Date of Birth (YYYY-MM-DD)</string>
     <string name="phone">Phone</string>
     <string name="sex">Sex (M or F)</string>
     <string name="calculate_and_complete_profile">Calculate and Complete Profile</string>
@@ -53,5 +53,7 @@
     <string name="search">Search items</string>
     <string name="either_you_run_the_day_or_the_day_runs_you">"Either you run the day, or the day runs you"</string>
     <string name="quote_of_the_day">Quote of the Day</string>
+    <string name="add_item">Add Item</string>
+    <string name="delete_account">Delete Account</string>
 
 </resources>

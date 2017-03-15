@@ -23,8 +23,6 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
         SearchView simpleSearchView = (SearchView) findViewById(R.id.serachView); // inititate a search view
         CharSequence query = simpleSearchView.getQuery(); // get the query string currently in the text field
         //ToDo : fetch id from intent
-
-
     }
 
     public void onClick(View v) {

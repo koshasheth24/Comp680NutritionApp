@@ -85,6 +85,9 @@ public class DatabaseHelper{
             String sql ="DELETE FROM user_info WHERE id=" + user.getId();
             PreparedStatement stmt= (PreparedStatement) con.prepareStatement(sql);
             stmt.executeUpdate();
+            String sql1 ="DELETE FROM user_perday_counter WHERE id=" + user.getId();
+            PreparedStatement stmt1=(PreparedStatement) con.prepareStatement(sql1);
+            stmt.executeUpdate();
         }
         catch(SQLException e){
             e.printStackTrace();
@@ -126,27 +129,6 @@ public class DatabaseHelper{
         return n;
     }
 
-
-    public boolean checkUserProfileExists(String username) {
-        Connection con = getConnection();
-        boolean userExists = false;
-        try {
-            Statement stmt = (Statement) con.createStatement();
-            ResultSet rs;
-            String sql = "SELECT age, weight FROM user_info where user_name="+
-                    "'"+ username+ "'" ;
-            rs= (ResultSet) stmt.executeQuery(sql);
-            if(getSize(rs)== 1){
-                userExists =  true;
-            }else{
-                userExists = false;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return userExists;
-    }
-
     public void saveToUserTable(User user) {
         Connection con = getConnection();
         try {
@@ -174,7 +156,6 @@ public class DatabaseHelper{
     }
 
     public User calculateRequiredValues(User user) {
-        // ToDo : logic to calculate required cal,fiber,protiens
         Double BMR=0.0;
         if(user.getSex().compareTo("M")==1 || user.getSex().compareTo("m")==1){
             BMR= (10*user.getWeight()) + (6.25*0.033*user.getHeight())-(5*user.getAge()) + 5;

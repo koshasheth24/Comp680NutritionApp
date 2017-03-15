@@ -94,8 +94,16 @@ public class MainActivity extends AppCompatActivity
             Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intentMain);
         } else if (id == R.id.profile) {
-            //ToDO :Add display profile page
+            Intent intentProfileView=new Intent(getApplicationContext(),ProfileViewAndRecalculate.class);
+            intentProfileView.putExtra("ID",idStr);
+            startActivity(intentProfileView);
 
+        } else if(id == R.id.deleteUser){
+            User user=new User();
+            user.setId(Integer.parseInt(idStr));
+            databaseHelper.deleteUser(user);
+            Intent loginActivity=new Intent(getApplicationContext(),Login.class);
+            startActivity(loginActivity);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
