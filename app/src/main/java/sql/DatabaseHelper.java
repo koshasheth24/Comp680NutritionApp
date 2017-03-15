@@ -133,7 +133,7 @@ public class DatabaseHelper{
         Connection con = getConnection();
         try {
             String sql = "UPDATE user_info set age=?, sex=?, height=?, weight=?," +
-                    " address=?, dob=?, contact=?, max_cal=?, max_protein=?, max_fiber=? "
+                    " address=?, dob=?, contact=?, max_cal=?, max_protein=?, max_fiber=?,user_name=? "
                     +" WHERE user_name='"+user.getEmail()+"'";
 
             PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
@@ -148,7 +148,7 @@ public class DatabaseHelper{
             stmt.setDouble(8,user.getMax_cal());
             stmt.setDouble(9,user.getMax_protien());
             stmt.setDouble(10,user.getMax_fiber());
-
+            stmt.setString(11,user.getName());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -237,12 +237,22 @@ public class DatabaseHelper{
         User user= new User();
        try {
            Connection con = getConnection();
-           String sql = "SELECT max_cal, max_protein, max_fiber FROM user_info WHERE id=" + id;
+           String sql = "SELECT max_cal, max_protein, max_fiber,user_name,email,age,sex,height,weight,address,dob,contact" +
+                   " FROM user_info WHERE id=" + id;
            PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
            ResultSet rs = (ResultSet) stmt.executeQuery();
            user.setMax_cal(rs.getDouble("max_cal"));
            user.setMax_fiber(rs.getDouble("max_fiber"));
            user.setMax_protien(rs.getDouble("max_protein"));
+           user.setName(rs.getString("user_name"));
+           user.setEmail(rs.getString("email"));
+           user.setAge(rs.getInt("age"));
+           user.setSex(rs.getString("sex"));
+           user.setHeight(rs.getDouble("height"));
+           user.setWeight(rs.getDouble("weight"));
+           user.setAddress(rs.getString("address"));
+           user.setDob(String.valueOf(rs.getDate("dob")));
+           user.setPhone(String.valueOf(rs.getInt("contact")));
 
        }
        catch(SQLException e){

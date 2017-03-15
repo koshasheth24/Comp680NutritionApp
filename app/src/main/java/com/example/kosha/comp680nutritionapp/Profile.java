@@ -100,6 +100,7 @@ public class Profile extends AppCompatActivity {
                 //Recieve in array list
                 populateUserObject();
                 user=databaseHelper.calculateRequiredValues(user);
+                databaseHelper.addUser(user);
                 databaseHelper.saveToUserTable(user);
                 Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(mainActivity);

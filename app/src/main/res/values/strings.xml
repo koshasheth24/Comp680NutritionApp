@@ -55,5 +55,10 @@
     <string name="quote_of_the_day">Quote of the Day</string>
     <string name="add_item">Add Item</string>
     <string name="delete_account">Delete Account</string>
+    <string name="recalculate">Recalculate</string>
+    <string name="sex1">Sex</string>
+    <string name="max_calories">Max. Calories</string>
+    <string name="max_fiber">Max. Fiber</string>
+    <string name="max_proteins">Max. Proteins</string>
 
 </resources>
