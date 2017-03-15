@@ -15,14 +15,17 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
     private DatabaseHelper databaseHelper;
     private UserCalorieCount userCalCount;
     int id;
+    String idstr;
     Float cal,protien,fiber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_item_add);
+        idstr=getIntent().getStringExtra("ID");
+        id=Integer.parseInt(idstr);
         SearchView simpleSearchView = (SearchView) findViewById(R.id.serachView); // inititate a search view
         CharSequence query = simpleSearchView.getQuery(); // get the query string currently in the text field
-        //ToDo : fetch id from intent
+
     }
 
     public void onClick(View v) {
