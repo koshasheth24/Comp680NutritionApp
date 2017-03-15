@@ -23,7 +23,10 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="@string/add_food_item" />
+            android:text="@string/add_food_item"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <SearchView
             android:id="@+id/serachView"
@@ -69,7 +72,10 @@
                 android:id="@+id/textCurrentNutrients"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:text="@string/current_nutrients" />
+                android:text="@string/current_nutrients"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </android.support.design.widget.TextInputLayout>
 
         <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"

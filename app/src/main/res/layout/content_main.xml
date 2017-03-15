@@ -41,7 +41,8 @@
                 android:fontFamily="sans-serif-condensed"
                 android:text="@string/quote_of_the_day"
                 android:textAlignment="center"
-                android:textAppearance="@android:style/TextAppearance.Material.Display2" />
+                android:textAppearance="@android:style/TextAppearance.Material.Display2"
+                android:textStyle="bold" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout

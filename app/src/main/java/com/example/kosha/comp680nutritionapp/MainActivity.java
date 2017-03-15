@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity
     String email="",idStr="",name="";
     DatabaseHelper databaseHelper=new DatabaseHelper();
     TextView cal,pro,fiber;
+    int id;
 
 
     @Override
@@ -43,13 +44,13 @@ public class MainActivity extends AppCompatActivity
 
         //main activity page-->Welcome Page
         email = getIntent().getStringExtra("EMAIL");
-        idStr=getIntent().getStringExtra("ID");
+        id=databaseHelper.getId(email);
         intViews();
-        name=databaseHelper.getNameFromID(Integer.valueOf(idStr));
+        name=databaseHelper.getNameFromID(id);
         greeting=(TextView)findViewById(R.id.Greeting);
         greeting.setText("Welcome "+name);
-        UserCalorieCount userCalCount=databaseHelper.fetchPreviousValue(Integer.valueOf(idStr));
-        User user=databaseHelper.fetchUserDetails(Integer.valueOf(idStr));
+        UserCalorieCount userCalCount=databaseHelper.fetchPreviousValue(id);
+        User user=databaseHelper.fetchUserDetails(id);
         updateTableFields(userCalCount,user);
         //
     }

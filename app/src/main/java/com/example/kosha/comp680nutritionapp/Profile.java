@@ -103,6 +103,9 @@ public class Profile extends AppCompatActivity {
                 databaseHelper.addUser(user);
                 databaseHelper.saveToUserTable(user);
                 Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                mainActivity.putExtra("ID",databaseHelper.getId(email));
+                mainActivity.putExtra("EMAIL",email);
+                mainActivity.putExtra("NAME",name);
                 startActivity(mainActivity);
 
     }
@@ -149,13 +152,13 @@ public class Profile extends AppCompatActivity {
         if (!inputValidation.isInputEditTextFilled(textSex, sex, getString(R.string.error_message_sex))) {
             return;
         }
-        // check format
+        /*// check format
         if(!inputValidation.isInputEditTextPhoneNumber(textPhone,phone,getString(R.string.error_message_weight))){
            return;
-        }
-        if(!inputValidation.isInputEditTextSex(textSex,sex,getString(R.string.error_message_weight))){
+        }*/
+       /* if(!inputValidation.isInputEditTextSex(textSex,sex,getString(R.string.error_message_weight))){
             return;
-        }
+        }*/
 
         //ToDo : add date format check
 

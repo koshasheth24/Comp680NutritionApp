@@ -72,6 +72,9 @@ public class DatabaseHelper{
                     + "(user_name, password) " + "VALUES"
                     + "("+"'"+user.getEmail()+"',"+"'"+user.getPassword()+"')";
             stmt.executeUpdate(sql);
+            con.commit();
+            con.close();
+            stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -133,7 +136,7 @@ public class DatabaseHelper{
         Connection con = getConnection();
         try {
             String sql = "UPDATE user_info set age=?, sex=?, height=?, weight=?," +
-                    " address=?, dob=?, contact=?, max_cal=?, max_protein=?, max_fiber=?,user_name=? "
+                    " address=?, dob=?, contact=?, max_cal=?, max_protein=?, max_fiber=?,name=? "
                     +" WHERE user_name='"+user.getEmail()+"'";
 
             PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
@@ -150,6 +153,9 @@ public class DatabaseHelper{
             stmt.setDouble(10,user.getMax_fiber());
             stmt.setString(11,user.getName());
             stmt.executeUpdate();
+            con.commit();
+            con.close();
+            stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -206,6 +212,9 @@ public class DatabaseHelper{
                     + "WHERE id = " + userCalCount.getId();
             PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
             stmt.executeUpdate();
+            con.commit();
+            con.close();
+            stmt.close();
         }
         catch(SQLException e){
             e.printStackTrace();
