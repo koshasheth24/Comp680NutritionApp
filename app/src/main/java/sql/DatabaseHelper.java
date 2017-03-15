@@ -295,4 +295,21 @@ public class DatabaseHelper{
         }
         return id;
     }
+
+    public String getNameFromID(Integer id) {
+        String name="";
+        Connection con=getConnection();
+        String getIdQuery="SELECT name FROM user_info WHERE id=?";
+        try {
+            PreparedStatement getIdSQL =(PreparedStatement) con.prepareStatement(getIdQuery);
+            getIdSQL.setInt(1,id);
+            ResultSet rs= (ResultSet) getIdSQL.executeQuery();
+            while(rs.next()){
+                name=rs.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return name;
+    }
 }

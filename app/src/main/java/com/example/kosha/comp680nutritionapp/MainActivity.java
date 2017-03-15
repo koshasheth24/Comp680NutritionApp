@@ -19,9 +19,10 @@ import sql.DatabaseHelper;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView greeting;
-    String email="",idStr="";
+    String email="",idStr="",name="";
     DatabaseHelper databaseHelper=new DatabaseHelper();
-    int id;
+    TextView cal,pro,fiber;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,18 +43,28 @@ public class MainActivity extends AppCompatActivity
         //main activity page-->Welcome Page
         email = getIntent().getStringExtra("EMAIL");
         idStr=getIntent().getStringExtra("ID");
+        intViews();
+        name=databaseHelper.getNameFromID(Integer.valueOf(idStr));
         greeting=(TextView)findViewById(R.id.Greeting);
-        greeting.setText("Welcome User");
+        greeting.setText("Welcome "+name);
         UserCalorieCount userCalCount=databaseHelper.fetchPreviousValue(Integer.valueOf(idStr));
         User user=databaseHelper.fetchUserDetails(Integer.valueOf(idStr));
         updateTableFields(userCalCount,user);
         //
     }
 
+    private void intViews() {
+        cal=(TextView)findViewById(R.id.remainingCal);
+        pro=(TextView)findViewById(R.id.remainingPro);
+        fiber=(TextView)findViewById(R.id.remainingfiber);
+
+    }
+
+
     private void updateTableFields(UserCalorieCount userCalCount, User user) {
-        //ToDo : update table fields
-
-
+        cal.setText(String.valueOf(user.getMax_cal()-userCalCount.getTotal_cal()));
+        pro.setText(String.valueOf(user.getMax_protien()-userCalCount.getTotal_protien()));
+        fiber.setText(String.valueOf(user.getMax_fiber()-userCalCount.getTotal_fiber()));
     }
 
     @Override

@@ -108,6 +108,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 Intent mainIntent=new Intent(activity, MainActivity.class);
                 mainIntent.putExtra("EMAIL",textInputEditTextEmail.getText().toString().trim());
                 mainIntent.putExtra("ID",String.valueOf(getID()));
+
                 startActivity(mainIntent);
 
 

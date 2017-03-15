@@ -90,8 +90,10 @@
             <TextView
                 android:text="@string/calories"
                 android:padding="6dip" />
+
             <TextView
 
+                android:id="@+id/remainingCal"
                 android:gravity="end"
                 android:padding="6dip" />
         </TableRow>
@@ -100,20 +102,24 @@
             <TextView
                 android:text="@string/protiens"
                 android:padding="6dip" />
+
             <TextView
-                android:text=""
+                android:id="@+id/remainingPro"
                 android:gravity="end"
-                android:padding="6dip" />
+                android:padding="6dip"
+                android:text="" />
         </TableRow>
 
         <TableRow>
             <TextView
                 android:text="@string/fiber"
                 android:padding="6dip" />
+
             <TextView
-                android:text=""
+                android:id="@+id/remainingfiber"
                 android:gravity="end"
-                android:padding="6dip" />
+                android:padding="6dip"
+                android:text="" />
         </TableRow>
         </TableLayout>
     </android.support.v7.widget.LinearLayoutCompat>
