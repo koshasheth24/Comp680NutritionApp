@@ -7,6 +7,7 @@ import com.mysql.jdbc.*;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import model.User;
@@ -103,11 +104,12 @@ public class DatabaseHelper{
         Connection con = getConnection();
         boolean userExists = false;
         try {
-            Statement stmt = (Statement) con.createStatement();
-            ResultSet rs;
-            String sql = "SELECT id, user_name, password FROM user_info where user_name="+
+            String sql = "SELECT user_name, password FROM user_info where user_name="+
                     "'"+ email+ "'" +" AND password="+"'"+password+ "'";
-            rs= (ResultSet) stmt.executeQuery(sql);
+            PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs;
+
+            rs= (ResultSet) stmt.executeQuery();
             if(getSize(rs)== 1){
                 userExists =  true;
             }else{
@@ -246,7 +248,7 @@ public class DatabaseHelper{
         User user= new User();
        try {
            Connection con = getConnection();
-           String sql = "SELECT max_cal, max_protein, max_fiber,user_name,email,age,sex,height,weight,address,dob,contact" +
+           String sql = "SELECT max_cal, max_protein, max_fiber,user_name,name,age,sex,height,weight,address,dob,contact" +
                    " FROM user_info WHERE id=" + id;
            PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
            ResultSet rs = (ResultSet) stmt.executeQuery();
@@ -254,7 +256,7 @@ public class DatabaseHelper{
            user.setMax_fiber(rs.getDouble("max_fiber"));
            user.setMax_protien(rs.getDouble("max_protein"));
            user.setName(rs.getString("user_name"));
-           user.setEmail(rs.getString("email"));
+           user.setEmail(rs.getString("name"));
            user.setAge(rs.getInt("age"));
            user.setSex(rs.getString("sex"));
            user.setHeight(rs.getDouble("height"));
@@ -320,5 +322,25 @@ public class DatabaseHelper{
             e.printStackTrace();
         }
         return name;
+    }
+
+    public ArrayList<String> getResults() {
+        ArrayList<String> items=new ArrayList<String>();
+        Connection con=getConnection();
+        String sql="SELECT Shrt_Desc from fetch_nutrients WHERE Shrt_Desc like ?";
+        PreparedStatement pst= null;
+        try {
+            pst = (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs=(ResultSet) pst.executeQuery();
+            int i=1;
+            while(rs.next()){
+                items.set(i,rs.getString(i));
+                i++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return items;
+
     }
 }

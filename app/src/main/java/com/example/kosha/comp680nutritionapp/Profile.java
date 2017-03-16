@@ -9,10 +9,6 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 import Helpers.InputValidation;
 import model.User;
 import sql.DatabaseHelper;

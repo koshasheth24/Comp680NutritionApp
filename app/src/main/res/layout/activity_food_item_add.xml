@@ -29,11 +29,18 @@
             android:textStyle="bold" />
 
         <SearchView
-            android:id="@+id/serachView"
+            android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:queryHint="@string/search"
+            app:actionViewClass="android.widget.SearchView"
+            app:showAsAction="always"
             />
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/searchView" />
 
 
     </android.support.design.widget.TextInputLayout>

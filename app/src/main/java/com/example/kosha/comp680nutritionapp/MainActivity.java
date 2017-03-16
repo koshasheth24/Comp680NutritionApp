@@ -126,7 +126,9 @@ public class MainActivity extends AppCompatActivity
     public void onClick(View v) {
         if(v.getId()==R.id.appCompatButtonMeal){
             Intent addItem=new Intent(getApplicationContext(),FoodItemAddActivity.class);
-            addItem.putExtra("ID",idStr);
+            addItem.setAction(Intent.ACTION_SEARCH);
+            addItem.setType(Intent.ACTION_VIEW);
+            //addItem.putExtra("ID",idStr);
             startActivity(addItem);
 
         }

@@ -60,5 +60,6 @@
     <string name="max_calories">Max. Calories</string>
     <string name="max_fiber">Max. Fiber</string>
     <string name="max_proteins">Max. Proteins</string>
+    <string name="search_item">Search Item</string>
 
 </resources>
