@@ -105,15 +105,16 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.todaycount) {
             Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
+            intentMain.putExtra("EMAIL",email);
             startActivity(intentMain);
         } else if (id == R.id.profile) {
             Intent intentProfileView=new Intent(getApplicationContext(),ProfileViewAndRecalculate.class);
-            intentProfileView.putExtra("ID",idStr);
+            intentProfileView.putExtra("ID",email);
             startActivity(intentProfileView);
 
         } else if(id == R.id.deleteUser){
             User user=new User();
-            user.setId(Integer.parseInt(idStr));
+            user.setId(databaseHelper.getId(email));
             databaseHelper.deleteUser(user);
             Intent loginActivity=new Intent(getApplicationContext(),Login.class);
             startActivity(loginActivity);
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity
             Intent addItem=new Intent(getApplicationContext(),FoodItemAddActivity.class);
             addItem.setAction(Intent.ACTION_SEARCH);
             addItem.setType(Intent.ACTION_VIEW);
-            //addItem.putExtra("ID",idStr);
+            addItem.putExtra("EMAIL",email);
             startActivity(addItem);
 
         }

@@ -93,7 +93,6 @@
                 <EditText
                     android:id="@+id/Age"
                     android:gravity="end"
-                    android:inputType="number"
                     android:padding="6dip"
                     android:background="@android:color/transparent"
                     />

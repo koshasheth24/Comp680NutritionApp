@@ -8,8 +8,7 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Objects;
-
+import model.ItemNutrient;
 import model.User;
 import model.UserCalorieCount;
 
@@ -25,9 +24,9 @@ public class DatabaseHelper{
     private static final String TABLE_USER = "user_info";
     private static final String USER_PERDAY_COUNTER="user_perday_counter";
     private static final String FETCH_NUTRIENTS="fetch_nutrients";
-    String url="jdbc:mysql://76.174.25.49:3306/nutrients";
-    String userCon="kosha";
-    String passwordCon="kosha";
+    String url="jdbc:mysql://allnutrients.c1dcqdphtova.us-west-2.rds.amazonaws.com:3306/all_nutrients";
+    String userCon="comp680";
+    String passwordCon="abcd1234";
 
 
     private double max_cal,max_protien,max_fiber;
@@ -72,10 +71,28 @@ public class DatabaseHelper{
             String sql = "INSERT INTO user_info"
                     + "(user_name, password) " + "VALUES"
                     + "("+"'"+user.getEmail()+"',"+"'"+user.getPassword()+"')";
+
             stmt.executeUpdate(sql);
             con.commit();
             con.close();
             stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void addPerDayCounter(User user){
+        Connection con = getConnection();
+        Statement stmt = null;
+        try {
+            java.util.Date date=new java.util.Date();
+            stmt = (Statement) con.createStatement();
+            String sqluserCal = "INSERT INTO user_perday_counter"
+                    + "(id,curr_date) " + "VALUES"
+                    + "("+"'"+getId(user.getEmail())+"'"+",'"+date+"'"+")";
+            stmt.executeUpdate(sqluserCal);
+            con.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -92,6 +109,9 @@ public class DatabaseHelper{
             String sql1 ="DELETE FROM user_perday_counter WHERE id=" + user.getId();
             PreparedStatement stmt1=(PreparedStatement) con.prepareStatement(sql1);
             stmt.executeUpdate();
+            stmt1.executeUpdate();
+            con.commit();
+            con.close();
         }
         catch(SQLException e){
             e.printStackTrace();
@@ -160,22 +180,27 @@ public class DatabaseHelper{
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
+            try {
+                con.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 
     public User calculateRequiredValues(User user) {
         Double BMR=0.0;
-        if(user.getSex().compareTo("M")==1 || user.getSex().compareTo("m")==1){
+        if(user.getSex().equals("M")|| user.getSex().equals("m")){
             BMR= (10*user.getWeight()) + (6.25*0.033*user.getHeight())-(5*user.getAge()) + 5;
         }
-        else if(user.getSex().compareTo("F")==1 || user.getSex().compareTo("f")==1){
+        else if(user.getSex().equals("F") || user.getSex().equals("f")){
             BMR= (10*user.getWeight()) + (6.25*0.033*user.getHeight())-(5*user.getAge()) - 161;
         }
 
         max_cal=BMR*1.275;
         max_protien=user.getWeight()*1.275;
 
-        if(user.getSex().compareTo("M")==1 || user.getSex().compareTo("m")==1){
+        if(user.getSex().equals("M")|| user.getSex().equals("m")){
             if(user.getAge()<50){
                 max_fiber=38;
             }
@@ -183,7 +208,7 @@ public class DatabaseHelper{
                 max_fiber=30;
             }
         }
-        else if(user.getSex().compareTo("F")==1 || user.getSex().compareTo("f")==1){
+        else if(user.getSex().equals("F") || user.getSex().equals("f")){
             if(user.getAge()<50){
                 max_fiber=25;
             }
@@ -191,9 +216,6 @@ public class DatabaseHelper{
                 max_fiber=21;
             }
         }
-
-
-
         user.setMax_protien(max_protien);
         user.setMax_fiber(max_fiber);
         user.setMax_cal(max_cal);
@@ -209,12 +231,14 @@ public class DatabaseHelper{
 
             String sql = "UPDATE user_perday_counter SET curr_cal="
                     + userCalCount.getTotal_cal() + ","
+                    +"curr_proteins="
                     + userCalCount.getTotal_protien()
-                    + "," + userCalCount.getTotal_fiber()
+                    + ", curr_fiber="
+                    + userCalCount.getTotal_fiber()
                     + "WHERE id = " + userCalCount.getId();
             PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
             stmt.executeUpdate();
-            con.commit();
+            //con.commit();
             con.close();
             stmt.close();
         }
@@ -228,13 +252,15 @@ public class DatabaseHelper{
         UserCalorieCount userCalCount = new UserCalorieCount();
         Connection con = getConnection();
         try{
-            String sql ="SELECT curr_cal, curr_proteins, curr_fiber FROM user_perday_counter WHERE id=" + id;
+            String sql ="SELECT curr_cal, curr_proteins, curr_fiber FROM all_nutrients.user_perday_counter WHERE id=" + id;
 
             PreparedStatement stmt= (PreparedStatement) con.prepareStatement(sql);
             ResultSet rs= (ResultSet) stmt.executeQuery();
-            userCalCount.setTotal_cal (rs.getDouble("curr_cal"));
-            userCalCount.setTotal_fiber(rs.getDouble("curr_fiber"));
-            userCalCount.setTotal_protien(rs.getDouble("curr_protein"));
+            while(rs.next()) {
+                userCalCount.setTotal_cal(rs.getDouble("curr_cal"));
+                userCalCount.setTotal_fiber(rs.getDouble("curr_fiber"));
+                userCalCount.setTotal_protien(rs.getDouble("curr_proteins"));
+            }
         }
         catch(SQLException e){
             e.printStackTrace();
@@ -249,27 +275,28 @@ public class DatabaseHelper{
        try {
            Connection con = getConnection();
            String sql = "SELECT max_cal, max_protein, max_fiber,user_name,name,age,sex,height,weight,address,dob,contact" +
-                   " FROM user_info WHERE id=" + id;
+                   " FROM all_nutrients.user_info WHERE id=" + id;
            PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
            ResultSet rs = (ResultSet) stmt.executeQuery();
-           user.setMax_cal(rs.getDouble("max_cal"));
-           user.setMax_fiber(rs.getDouble("max_fiber"));
-           user.setMax_protien(rs.getDouble("max_protein"));
-           user.setName(rs.getString("user_name"));
-           user.setEmail(rs.getString("name"));
-           user.setAge(rs.getInt("age"));
-           user.setSex(rs.getString("sex"));
-           user.setHeight(rs.getDouble("height"));
-           user.setWeight(rs.getDouble("weight"));
-           user.setAddress(rs.getString("address"));
-           user.setDob(String.valueOf(rs.getDate("dob")));
-           user.setPhone(String.valueOf(rs.getInt("contact")));
-
+           while(rs.next()) {
+               user.setMax_cal(rs.getDouble("max_cal"));
+               user.setMax_fiber(rs.getDouble("max_fiber"));
+               user.setMax_protien(rs.getDouble("max_protein"));
+               user.setName(rs.getString("name"));
+               user.setEmail(rs.getString("user_name"));
+               user.setAge(rs.getInt("age"));
+               user.setSex(rs.getString("sex"));
+               user.setHeight(rs.getDouble("height"));
+               user.setWeight(rs.getDouble("weight"));
+               user.setAddress(rs.getString("address"));
+               user.setDob(String.valueOf(rs.getDate("dob")));
+               user.setPhone(String.valueOf(rs.getInt("contact")));
+               user.setId(id);
+           }
        }
        catch(SQLException e){
-           e.printStackTrace();;
+           e.printStackTrace();
        }
-
         return user;
     }
 
@@ -326,21 +353,45 @@ public class DatabaseHelper{
 
     public ArrayList<String> getResults() {
         ArrayList<String> items=new ArrayList<String>();
+
         Connection con=getConnection();
-        String sql="SELECT Shrt_Desc from fetch_nutrients WHERE Shrt_Desc like ?";
+        String sql="SELECT distinct description from all_nutrients.fetch_nutrients";
         PreparedStatement pst= null;
         try {
             pst = (PreparedStatement) con.prepareStatement(sql);
             ResultSet rs=(ResultSet) pst.executeQuery();
             int i=1;
+            items.add("");
             while(rs.next()){
-                items.set(i,rs.getString(i));
-                i++;
+                items.add(rs.getString(i));
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return items;
+    }
 
+    public ItemNutrient fetchValuesForItem(String selItem) {
+        ItemNutrient itemNutrient=new ItemNutrient();
+        Connection con=getConnection();
+        String sql="SELECT * from all_nutrients.fetch_nutrients WHERE description=?";
+        PreparedStatement getItemDetails = null;
+        try {
+            getItemDetails = (PreparedStatement) con.prepareStatement(sql);
+            getItemDetails.setString(1,selItem);
+            ResultSet rs=(ResultSet) getItemDetails.executeQuery();
+            while (rs.next()){
+                itemNutrient.setCalories((float) rs.getDouble("calories"));
+                itemNutrient.setFiber((float) rs.getDouble("fiber"));
+                itemNutrient.setProtiens((float) rs.getDouble("proteins"));
+                itemNutrient.setItem(selItem);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return itemNutrient;
     }
 }

@@ -97,6 +97,7 @@ public class Profile extends AppCompatActivity {
                 populateUserObject();
                 user=databaseHelper.calculateRequiredValues(user);
                 databaseHelper.addUser(user);
+                databaseHelper.addPerDayCounter(user);
                 databaseHelper.saveToUserTable(user);
                 Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
                 mainActivity.putExtra("ID",databaseHelper.getId(email));
@@ -122,6 +123,7 @@ public class Profile extends AppCompatActivity {
         user.setMax_cal(max_cal);
         user.setMax_fiber(max_fiber);
         user.setMax_protien(max_protien);
+        user.setName(name);
     }
 
     private void verifyFromHelper() {

@@ -8,12 +8,14 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
 
 import java.util.ArrayList;
 
+import model.ItemNutrient;
 import model.UserCalorieCount;
 import sql.DatabaseHelper;
 
@@ -24,11 +26,15 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
     SearchView simpleSearchView;
     ListView list;
     ListViewAdaptor adapter;
-    Float cal,protien,fiber;
+    String email;
+    String selItem;
+    ItemNutrient itemNutrient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_item_add);
+        email = getIntent().getStringExtra("EMAIL");
+        id=databaseHelper.getId(email);
         simpleSearchView=(SearchView)findViewById(R.id.searchView);
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -36,7 +42,7 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
         simpleSearchView.setSearchableInfo(
 
                 searchManager.getSearchableInfo(new ComponentName(this,FoodItemAddActivity.class)));
-        simpleSearchView.setOnQueryTextListener(this);
+
         ArrayList<String> items=databaseHelper.getResults();
 
         // Locate the ListView in listview_main.xml
@@ -51,27 +57,37 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
 
         // Binds the Adapter to the ListView
         list.setAdapter(adapter);
+        simpleSearchView.setOnQueryTextListener(this);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selItem = (String) list.getItemAtPosition(position);
+                simpleSearchView.setQueryHint(selItem);
+                list.setVisibility(View.INVISIBLE);
+                itemNutrient=databaseHelper.fetchValuesForItem(selItem);
 
-
-       simpleSearchView.setOnQueryTextListener(this);
+            }
+        });
 
     }
 
     public void onClick(View v) {
         if(v.getId()==R.id.appCompatButtonCalculate){
             userCalCount=databaseHelper.fetchPreviousValue(id);
+            userCalCount.setId(id);
             calculateNewValues();
             databaseHelper.updateUserCalorieCountTable(userCalCount);
         }
         Intent intentRegister = new Intent(getApplicationContext(), MainActivity.class);
+        intentRegister.putExtra("EMAIL",email);
         startActivity(intentRegister);
 
     }
 
     private void calculateNewValues() {
-        userCalCount.setTotal_cal(userCalCount.getTotal_cal()+cal);
-        userCalCount.setTotal_fiber(userCalCount.getTotal_fiber()+fiber);
-        userCalCount.setTotal_protien(userCalCount.getTotal_protien()+protien);
+        userCalCount.setTotal_cal(userCalCount.getTotal_cal()+itemNutrient.getCalories());
+        userCalCount.setTotal_fiber(userCalCount.getTotal_fiber()+itemNutrient.getFiber());
+        userCalCount.setTotal_protien(userCalCount.getTotal_protien()+itemNutrient.getProtiens());
     }
 
     @Override
@@ -84,6 +100,7 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
     public boolean onQueryTextChange(String newText) {
         String text =newText;
         adapter.filter(text);
-        return false;
+
+        return true;
     }
 }
