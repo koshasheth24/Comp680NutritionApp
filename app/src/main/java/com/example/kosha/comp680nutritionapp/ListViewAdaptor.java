@@ -21,8 +21,6 @@ import model.ItemNutrient;
 
 public class ListViewAdaptor extends BaseAdapter {
 
-    // Declare Variables
-
     Context mContext;
     LayoutInflater inflater;
     private List<String> itemL = null;

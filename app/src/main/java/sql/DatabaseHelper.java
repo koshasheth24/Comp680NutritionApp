@@ -1,5 +1,7 @@
 package sql;
 import android.content.Context;
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
 import android.os.StrictMode;
 
 import com.mysql.jdbc.*;
@@ -87,10 +89,11 @@ public class DatabaseHelper{
         Statement stmt = null;
         try {
             java.util.Date date=new java.util.Date();
+            String ddt="2017-03-29";
             stmt = (Statement) con.createStatement();
             String sqluserCal = "INSERT INTO user_perday_counter"
                     + "(id,curr_date) " + "VALUES"
-                    + "("+"'"+getId(user.getEmail())+"'"+",'"+date+"'"+")";
+                    + "("+"'"+getId(user.getEmail())+"'"+",'"+ddt+"'"+")";
             stmt.executeUpdate(sqluserCal);
             con.commit();
         } catch (SQLException e) {

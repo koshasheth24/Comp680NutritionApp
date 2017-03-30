@@ -4,17 +4,13 @@ import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-
-
 import java.util.ArrayList;
-
 import model.ItemNutrient;
 import model.UserCalorieCount;
 import sql.DatabaseHelper;
@@ -36,6 +32,7 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
         email = getIntent().getStringExtra("EMAIL");
         id=databaseHelper.getId(email);
         simpleSearchView=(SearchView)findViewById(R.id.searchView);
+        simpleSearchView.setQueryHint("Search Food itmes");
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
@@ -45,26 +42,19 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
 
         ArrayList<String> items=databaseHelper.getResults();
 
-        // Locate the ListView in listview_main.xml
         list = (ListView) findViewById(R.id.listview);
-
-        for (int i = 0; i < items.size(); i++) {
-
-        }
-
-        // Pass results to ListViewAdapter Class
         adapter = new ListViewAdaptor(this, items);
 
-        // Binds the Adapter to the ListView
         list.setAdapter(adapter);
         simpleSearchView.setOnQueryTextListener(this);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selItem = (String) list.getItemAtPosition(position);
-                simpleSearchView.setQueryHint(selItem);
+               // simpleSearchView.setQueryHint(selItem);
+                simpleSearchView.setQuery(selItem,false);
                 list.setVisibility(View.INVISIBLE);
-                itemNutrient=databaseHelper.fetchValuesForItem(selItem);
+
 
             }
         });
@@ -73,6 +63,7 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
 
     public void onClick(View v) {
         if(v.getId()==R.id.appCompatButtonCalculate){
+            itemNutrient=databaseHelper.fetchValuesForItem(selItem);
             userCalCount=databaseHelper.fetchPreviousValue(id);
             userCalCount.setId(id);
             calculateNewValues();
@@ -100,7 +91,6 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
     public boolean onQueryTextChange(String newText) {
         String text =newText;
         adapter.filter(text);
-
-        return true;
+        return false;
     }
 }
