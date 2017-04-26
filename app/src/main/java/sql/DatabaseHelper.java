@@ -1,7 +1,5 @@
 package sql;
 import android.content.Context;
-import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
 import android.os.StrictMode;
 
 import com.mysql.jdbc.*;
@@ -282,6 +280,7 @@ public class DatabaseHelper{
            PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
            ResultSet rs = (ResultSet) stmt.executeQuery();
            while(rs.next()) {
+
                user.setMax_cal(rs.getDouble("max_cal"));
                user.setMax_fiber(rs.getDouble("max_fiber"));
                user.setMax_protien(rs.getDouble("max_protein"));
@@ -295,6 +294,7 @@ public class DatabaseHelper{
                user.setDob(String.valueOf(rs.getDate("dob")));
                user.setPhone(String.valueOf(rs.getInt("contact")));
                user.setId(id);
+
            }
        }
        catch(SQLException e){

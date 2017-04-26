@@ -118,6 +118,10 @@ public class MainActivity extends AppCompatActivity
             databaseHelper.deleteUser(user);
             Intent loginActivity=new Intent(getApplicationContext(),Login.class);
             startActivity(loginActivity);
+        } else if(id == R.id.generateReport){
+            Intent GenerateReport=new Intent(getApplicationContext(),GenerateReport.class);
+            GenerateReport.putExtra("EMAIL",email);
+            startActivity(GenerateReport);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

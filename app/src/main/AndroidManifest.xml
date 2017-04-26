@@ -30,13 +30,15 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".FoodItemAddActivity">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH"></action>
+                <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
 
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".ProfileViewAndRecalculate"></activity>
+        <activity android:name=".ProfileViewAndRecalculate" />
+        <activity android:name=".GenerateReport"></activity>
     </application>
 
 </manifest>
