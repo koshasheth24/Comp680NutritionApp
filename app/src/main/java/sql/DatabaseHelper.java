@@ -303,6 +303,57 @@ public class DatabaseHelper{
         return user;
     }
 
+    public User fetchUserDetailsForPDF(int id) {
+
+        User user= new User();
+        try {
+            Connection con = getConnection();
+            String sql = "SELECT max_cal, max_protein, max_fiber,name" +
+                    " FROM all_nutrients.user_info WHERE id=" + id;
+            PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs = (ResultSet) stmt.executeQuery();
+            while(rs.next()) {
+
+                user.setMax_cal(rs.getDouble("max_cal"));
+                user.setMax_fiber(rs.getDouble("max_fiber"));
+                user.setMax_protien(rs.getDouble("max_protein"));
+                user.setName(rs.getString("name"));
+                user.setId(id);
+
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    public ArrayList<UserCalorieCount> fetchCurrValuesForReport(int id) {
+
+        ArrayList<UserCalorieCount> userCalCountList = new ArrayList<>();
+        userCalCount=new UserCalorieCount();
+        Connection con = getConnection();
+        try{
+            String sql ="SELECT curr_cal, curr_proteins, curr_fiber, curr_date FROM all_nutrients.user_perday_counter WHERE id=" + id;
+
+            PreparedStatement stmt= (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs= (ResultSet) stmt.executeQuery();
+            while(rs.next()) {
+
+                userCalCount.setTotal_cal(rs.getDouble("curr_cal"));
+                userCalCount.setTotal_fiber(rs.getDouble("curr_fiber"));
+                userCalCount.setTotal_protien(rs.getDouble("curr_proteins"));
+                userCalCount.setDate(rs.getDate("curr_date"));
+                userCalCountList.add(userCalCount);
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return userCalCountList;
+    }
+
     public boolean checkUser(String email) {
         try {
             Connection con = getConnection();

@@ -43,7 +43,6 @@
                     android:text="@string/hint_name" />
 
                 <TextView
-
                     android:id="@+id/name"
                     android:gravity="end"
                     android:padding="6dip" />

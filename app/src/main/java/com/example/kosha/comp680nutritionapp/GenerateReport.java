@@ -1,22 +1,75 @@
 package com.example.kosha.comp680nutritionapp;
-
-import android.graphics.Rect;
-import android.graphics.pdf.PdfDocument;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+
+import model.User;
+import model.UserCalorieCount;
+import sql.DatabaseHelper;
+
 public class GenerateReport extends AppCompatActivity {
+    String email;
+    DatabaseHelper databaseHelper=new DatabaseHelper();
+    int id;
+    ArrayList<UserCalorieCount> userCalorieCountArrayList;
+    User user=new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generate_report);
-        createPdf();
+        email = getIntent().getStringExtra("EMAIL");
+        id=databaseHelper.getId(email);
+        user=databaseHelper.fetchUserDetailsForPDF(id);
+        userCalorieCountArrayList=databaseHelper.fetchCurrValuesForReport(id);
     }
 
-    private void createPdf() {
+    private void createPdf(String filename) {
+        Document document = new Document();
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream(filename));
+            document.open();
+            PdfPTable table = createFirstTable();
+            table.setWidthPercentage(75);
+            table.setHorizontalAlignment(Element.ALIGN_CENTER);
+            document.add(table);
+            document.close();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
+
+    private PdfPTable createFirstTable() {
+
+        PdfPTable table = new PdfPTable(8);
+
+        PdfPCell cell;
+        cell = new PdfPCell(new Phrase("Cell with colspan 3"));
+        cell.setColspan(3);
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase("Cell with rowspan 2"));
+        cell.setRowspan(2);
+        table.addCell(cell);
+        table.addCell("row 1; cell 1");
+        table.addCell("row 1; cell 2");
+        table.addCell("row 2; cell 1");
+        table.addCell("row 2; cell 2");
+        return table;
+    }
+
 
 }
