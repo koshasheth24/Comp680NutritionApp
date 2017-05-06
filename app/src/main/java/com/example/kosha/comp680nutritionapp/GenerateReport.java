@@ -13,9 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.io.FileNotFoundException;
@@ -100,20 +98,6 @@ public class GenerateReport extends AppCompatActivity {
     }
 
     private PdfPTable createFirstTable() {
-
-        PdfPTable table = new PdfPTable(7);
-        PdfPCell cell;
-        cell = new PdfPCell(new Phrase("Cell with colspan 3"));
-        cell.setColspan(3);
-        table.addCell(cell);
-        cell = new PdfPCell(new Phrase("Cell with rowspan 2"));
-        cell.setRowspan(2);
-        table.addCell(cell);
-        table.addCell("row 1; cell 1");
-        table.addCell("row 1; cell 2");
-        table.addCell("row 2; cell 1");
-        table.addCell("row 2; cell 2");
-        return table;
 
     }
 
