@@ -10,10 +10,26 @@
     android:paddingRight="20dp"
     android:paddingTop="20dp"
     tools:context="com.example.kosha.comp680nutritionapp.GenerateReport">
-        <android.support.v7.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
 
-        </android.support.v7.widget.LinearLayoutCompat>
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/exportToPdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorTextHint"
+            android:onClick="onClick"
+            android:text="@string/export_to_pdf" />
+    </android.support.v7.widget.LinearLayoutCompat>
     </android.support.v4.widget.NestedScrollView>

@@ -6,9 +6,17 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -24,6 +32,11 @@ public class GenerateReport extends AppCompatActivity {
     int id;
     ArrayList<UserCalorieCount> userCalorieCountArrayList;
     User user=new User();
+    private NestedScrollView nestedScrollView;
+    private TextView name;
+    private TableLayout userReportTable;
+    LinearLayoutCompat linearLayout;
+    AppCompatButton exportToPDF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +46,34 @@ public class GenerateReport extends AppCompatActivity {
         id=databaseHelper.getId(email);
         user=databaseHelper.fetchUserDetailsForPDF(id);
         userCalorieCountArrayList=databaseHelper.fetchCurrValuesForReport(id);
+
+        initViews();
+        displayResult();
+    }
+
+    private void displayResult() {
+        name.setText("Name: "+ user.getName());
+        for(int i=0;i<userCalorieCountArrayList.size();i++){
+
+            UserCalorieCount ucc=userCalorieCountArrayList.get(i);
+            TextView tv=new TextView(this);
+            tv.setText("\nDate: "+ucc.getDate()+"\n");
+            tv.append("Max Cal: "+user.getMax_cal()+"\n");
+            tv.append("Consumed Cal: "+ucc.getTotal_cal()+"\n");
+            tv.append("Max Protein: "+user.getMax_protien()+"\n");
+            tv.append("Consumed Protein: "+ucc.getTotal_protien()+"\n");
+            tv.append("Consumed Fiber: "+user.getMax_fiber()+"\n");
+            tv.append("Consumed Fiber: "+ucc.getTotal_fiber()+"\n");
+            linearLayout.addView(tv);
+        }
+    }
+
+    private void initViews() {
+        nestedScrollView=(NestedScrollView) findViewById(R.id.nestedScrollView);
+        name=(TextView) findViewById(R.id.name);
+        linearLayout=(LinearLayoutCompat)findViewById(R.id.linearLayout);
+        exportToPDF = (AppCompatButton) findViewById(R.id.exportToPdf);
+
     }
 
     private void createPdf(String filename) {
@@ -53,10 +94,14 @@ public class GenerateReport extends AppCompatActivity {
 
     }
 
+    public void onClick(View V){
+
+        //createFirstTable();
+    }
+
     private PdfPTable createFirstTable() {
 
-        PdfPTable table = new PdfPTable(8);
-
+        PdfPTable table = new PdfPTable(7);
         PdfPCell cell;
         cell = new PdfPCell(new Phrase("Cell with colspan 3"));
         cell.setColspan(3);
@@ -69,6 +114,7 @@ public class GenerateReport extends AppCompatActivity {
         table.addCell("row 2; cell 1");
         table.addCell("row 2; cell 2");
         return table;
+
     }
 
 

@@ -62,5 +62,13 @@
     <string name="max_proteins">Max. Proteins</string>
     <string name="search_item">Search Item</string>
     <string name="calorie_tracker">Calorie Tracker</string>
+    <string name="consumed_cal">Consumed Cal</string>
+    <string name="consumed_fiber">Consumed Fiber</string>
+    <string name="date">Date</string>
+    <string name="max_pro">Max. Pro</string>
+    <string name="max_cal">Max. Cal</string>
+    <string name="consumed_cal1">Consumed. Cal</string>
+    <string name="max_fiber1">Max. Fiber</string>
+    <string name="export_to_pdf">Export to PDF</string>
 
 </resources>
