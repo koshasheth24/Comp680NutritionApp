@@ -99,6 +99,10 @@ public class GenerateReport extends AppCompatActivity {
 
     private PdfPTable createFirstTable() {
 
+        PdfPTable table = new PdfPTable(7);
+
+        return table;
+
     }
 
 
