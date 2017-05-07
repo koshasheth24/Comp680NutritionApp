@@ -39,7 +39,11 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".ProfileViewAndRecalculate" />
-        <activity android:name=".GenerateReport" />
+        <activity android:name=".GenerateReport" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"></action>
+            </intent-filter>
+        </activity>
         <activity android:name=".DisplayReport">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"></action>

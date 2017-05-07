@@ -12,7 +12,7 @@ public class DisplayReport extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_report);
         Intent intent = getIntent();
-        intent.setType("application/pdf");
+        
 
 
     }

@@ -2,8 +2,12 @@ package com.example.kosha.comp680nutritionapp;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfImportedPage;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -20,6 +24,7 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -89,7 +94,7 @@ public class GenerateReport extends AppCompatActivity {
         String timeStamp=new SimpleDateFormat("yyyyMMdd_HHmmss").format(date);
         myFile = new File(pdfFolder + timeStamp + ".pdf");
         Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream(myFile));
+            PdfWriter writer=PdfWriter.getInstance(document, new FileOutputStream(myFile));
             document.open();
             PdfPTable table = createFirstTable();
             table.setWidthPercentage(75);
@@ -98,14 +103,14 @@ public class GenerateReport extends AppCompatActivity {
             document.close();
         } catch (DocumentException e) {
             e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void onClick(View V){
         createPdf();
-        Intent intent=new Intent(this,DisplayReport.class);
+        Intent intent=new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.fromFile(myFile),"application/pdf");
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
