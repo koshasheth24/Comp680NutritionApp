@@ -8,6 +8,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,16 +30,16 @@ import model.UserCalorieCount;
 import sql.DatabaseHelper;
 
 public class GenerateReport extends AppCompatActivity {
-    String email;
+    String email,fromDate,toDate;
     DatabaseHelper databaseHelper=new DatabaseHelper();
     int id;
     ArrayList<UserCalorieCount> userCalorieCountArrayList;
     User user=new User();
     private NestedScrollView nestedScrollView;
-    private TextView name;
-    private TableLayout userReportTable;
+    private TextView name,dateFrom,dateTo;
     LinearLayoutCompat linearLayout;
-    AppCompatButton exportToPDF;
+    AppCompatButton exportToPDF,generateResults;
+    TextInputLayout dateFromWid,dateToWid;
     File myFile;
 
     @Override
@@ -48,14 +49,13 @@ public class GenerateReport extends AppCompatActivity {
         email = getIntent().getStringExtra("EMAIL");
         id=databaseHelper.getId(email);
         user=databaseHelper.fetchUserDetailsForPDF(id);
-        userCalorieCountArrayList=databaseHelper.fetchCurrValuesForReport(id);
-
         initViews();
-        displayResult();
+        name.setText("Name: "+ user.getName());
+
     }
 
     private void displayResult() {
-        name.setText("Name: "+ user.getName());
+
         for(int i=0;i<userCalorieCountArrayList.size();i++){
 
             UserCalorieCount ucc=userCalorieCountArrayList.get(i);
@@ -75,7 +75,12 @@ public class GenerateReport extends AppCompatActivity {
         nestedScrollView=(NestedScrollView) findViewById(R.id.nestedScrollView);
         name=(TextView) findViewById(R.id.name);
         linearLayout=(LinearLayoutCompat)findViewById(R.id.linearLayout);
+        dateFrom=(TextView) findViewById(R.id.dateFrom);
+        dateTo=(TextView) findViewById(R.id.dateTo);
         exportToPDF = (AppCompatButton) findViewById(R.id.exportToPdf);
+        generateResults = (AppCompatButton) findViewById(R.id.generatePdf);
+        dateFromWid=(TextInputLayout) findViewById(R.id.dateFromWid);
+        dateToWid=(TextInputLayout)findViewById(R.id.dateToWid);
 
     }
 
@@ -104,11 +109,21 @@ public class GenerateReport extends AppCompatActivity {
     }
 
     public void onClick(View V){
-        createPdf();
-        Intent intent=new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(myFile),"application/pdf");
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        startActivity(intent);
+
+
+
+
+        userCalorieCountArrayList=databaseHelper.fetchCurrValuesForReport(id,dateFrom.getText().toString(),dateTo.getText().toString());
+
+        if(V.getId()==R.id.exportToPdf) {
+            createPdf();
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(myFile), "application/pdf");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+        }else if(V.getId()==R.id.generatePdf){
+            displayResult();
+        }
     }
 
     private PdfPTable createFirstTable() {

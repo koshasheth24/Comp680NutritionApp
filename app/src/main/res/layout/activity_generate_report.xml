@@ -23,6 +23,42 @@
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/dateFromWid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/dateFrom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/ReportFrom"
+                android:maxLines="1"
+                android:inputType="date"
+                android:textColor="@android:color/black" />
+
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/dateToWid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/dateTo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/ReportTo"
+                android:maxLines="1"
+                android:inputType="date"
+                android:textColor="@android:color/black" />
+
+        </android.support.design.widget.TextInputLayout>
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/generatePdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorTextHint"
+            android:onClick="onClick"
+            android:text="@string/get_results" />
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/exportToPdf"
             android:layout_width="match_parent"

@@ -7,8 +7,6 @@ import com.mysql.jdbc.*;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -364,31 +362,6 @@ public class DatabaseHelper{
         return user;
     }
 
-    public ArrayList<UserCalorieCount> fetchCurrValuesForReport(int id) {
-
-        ArrayList<UserCalorieCount> userCalCountList = new ArrayList<>();
-        userCalCount=new UserCalorieCount();
-        Connection con = getConnection();
-        try{
-            String sql ="SELECT curr_cal, curr_proteins, curr_fiber, curr_date FROM all_nutrients.user_perday_counter WHERE id=" + id;
-
-            PreparedStatement stmt= (PreparedStatement) con.prepareStatement(sql);
-            ResultSet rs= (ResultSet) stmt.executeQuery();
-            while(rs.next()) {
-
-                userCalCount.setTotal_cal(rs.getDouble("curr_cal"));
-                userCalCount.setTotal_fiber(rs.getDouble("curr_fiber"));
-                userCalCount.setTotal_protien(rs.getDouble("curr_proteins"));
-                userCalCount.setDate(rs.getDate("curr_date"));
-                userCalCountList.add(userCalCount);
-            }
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-
-        return userCalCountList;
-    }
 
     public boolean checkUser(String email) {
         try {
@@ -445,7 +418,7 @@ public class DatabaseHelper{
         ArrayList<String> items=new ArrayList<String>();
 
         Connection con=getConnection();
-        String sql="SELECT distinct description from all_nutrients.fetch_nutrients";
+        String sql="SELECT distinct description, quantity_description from all_nutrients.fetch_nutrients";
         PreparedStatement pst= null;
         try {
             pst = (PreparedStatement) con.prepareStatement(sql);
@@ -453,7 +426,7 @@ public class DatabaseHelper{
             int i=1;
             items.add("");
             while(rs.next()){
-                items.add(rs.getString(i));
+                items.add(rs.getString("description")+", "+rs.getString("quantity_description"));
 
             }
         } catch (SQLException e) {
@@ -483,5 +456,32 @@ public class DatabaseHelper{
         }
 
         return itemNutrient;
+    }
+
+    public ArrayList<UserCalorieCount> fetchCurrValuesForReport(int id, String fromDate, String toDate) {
+        ArrayList<UserCalorieCount> userCalCountList = new ArrayList<>();
+        userCalCount=new UserCalorieCount();
+        Connection con = getConnection();
+        try{
+            String sql ="SELECT curr_cal, curr_proteins, curr_fiber, curr_date FROM " +
+                    "all_nutrients.user_perday_counter WHERE id=" + id +" and curr_date BETWEEN"+"'"+fromDate+"' AND '"+toDate+"'" ;
+
+            PreparedStatement stmt= (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs= (ResultSet) stmt.executeQuery();
+            while(rs.next()) {
+
+                userCalCount.setTotal_cal(rs.getDouble("curr_cal"));
+                userCalCount.setTotal_fiber(rs.getDouble("curr_fiber"));
+                userCalCount.setTotal_protien(rs.getDouble("curr_proteins"));
+                userCalCount.setDate(rs.getDate("curr_date"));
+                userCalCountList.add(userCalCount);
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return userCalCountList;
+
     }
 }
