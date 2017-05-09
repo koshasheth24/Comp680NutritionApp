@@ -7,7 +7,12 @@ import com.mysql.jdbc.*;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import model.ItemNutrient;
 import model.User;
 import model.UserCalorieCount;
@@ -27,6 +32,7 @@ public class DatabaseHelper{
     String url="jdbc:mysql://allnutrients.c1dcqdphtova.us-west-2.rds.amazonaws.com:3306/all_nutrients";
     String userCon="comp680";
     String passwordCon="abcd1234";
+    Calendar c = Calendar.getInstance();
 
 
     private double max_cal,max_protien,max_fiber;
@@ -86,14 +92,13 @@ public class DatabaseHelper{
         Connection con = getConnection();
         Statement stmt = null;
         try {
-            java.util.Date date=new java.util.Date();
-            String ddt="2017-03-29";
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date date=c.getTime();
             stmt = (Statement) con.createStatement();
             String sqluserCal = "INSERT INTO user_perday_counter"
                     + "(id,curr_date) " + "VALUES"
-                    + "("+"'"+getId(user.getEmail())+"'"+",'"+ddt+"'"+")";
+                    + "("+"'"+getId(user.getEmail())+"'"+",'"+df.format(date)+"'"+")";
             stmt.executeUpdate(sqluserCal);
-            con.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -239,7 +244,6 @@ public class DatabaseHelper{
                     + "WHERE id = " + userCalCount.getId();
             PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
             stmt.executeUpdate();
-            //con.commit();
             con.close();
             stmt.close();
         }

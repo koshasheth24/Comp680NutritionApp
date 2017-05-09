@@ -34,10 +34,9 @@ public class LoginTest {
 
     @Test
     public void changeText_sameActivity() {
-        // Type text and then press the button.
         onView(withId(R.id.textInputEditTextEmail))
                 .perform(typeText(login), closeSoftKeyboard());
-        onView(withId(R.id.textInputEditTextPassword)).perform(click());
+        onView(withId(R.id.textInputEditTextPassword)).perform(typeText(passwd), closeSoftKeyboard());
         onView(withId(R.id.appCompatButtonLogin)).perform(click());
     }
 }
