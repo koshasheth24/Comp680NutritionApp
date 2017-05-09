@@ -33,7 +33,7 @@ public class DatabaseHelper{
     String userCon="comp680";
     String passwordCon="abcd1234";
     Calendar c = Calendar.getInstance();
-
+    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
     private double max_cal,max_protien,max_fiber;
     private UserCalorieCount userCalCount;
@@ -92,7 +92,7 @@ public class DatabaseHelper{
         Connection con = getConnection();
         Statement stmt = null;
         try {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
             java.util.Date date=c.getTime();
             stmt = (Statement) con.createStatement();
             String sqluserCal = "INSERT INTO user_perday_counter"
@@ -233,17 +233,30 @@ public class DatabaseHelper{
     public void updateUserCalorieCountTable(UserCalorieCount userCalCount) {
 
         Connection con= getConnection();
+        java.util.Date date=c.getTime();
+        PreparedStatement stmt = null;
         try{
-
-            String sql = "UPDATE user_perday_counter SET curr_cal="
-                    + userCalCount.getTotal_cal() + ","
-                    +"curr_proteins="
-                    + userCalCount.getTotal_protien()
-                    + ", curr_fiber="
-                    + userCalCount.getTotal_fiber()
-                    + "WHERE id = " + userCalCount.getId();
-            PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
-            stmt.executeUpdate();
+            if(checkIfRecordPresentForCurrentDate(userCalCount.getId())) {
+                String sql = "UPDATE user_perday_counter SET curr_cal="
+                        + userCalCount.getTotal_cal() + ","
+                        + "curr_proteins="
+                        + userCalCount.getTotal_protien()
+                        + ", curr_fiber="
+                        + userCalCount.getTotal_fiber()
+                        + "WHERE id = " + userCalCount.getId() + " and curr_date= '" + df.format(date)+"'";
+                stmt = (PreparedStatement) con.prepareStatement(sql);
+                stmt.executeUpdate();
+            }else{
+                String sql="INSERT INTO user_perday_counter"
+                        + "(id,curr_date,curr_cal,curr_proteins,curr_fiber) " + "VALUES"
+                        + "("+"'"+userCalCount.getId()+"'"+",'"+df.format(date)+"'"
+                        +",'"+userCalCount.getTotal_cal()+"'"
+                        +",'"+userCalCount.getTotal_protien()+"'"
+                        +",'"+userCalCount.getTotal_fiber()+"'"
+                        +")";
+                stmt = (PreparedStatement) con.prepareStatement(sql);
+                stmt.executeUpdate();
+            }
             con.close();
             stmt.close();
         }
@@ -252,12 +265,31 @@ public class DatabaseHelper{
         }
     }
 
+    private boolean checkIfRecordPresentForCurrentDate(int id) {
+        try {
+            java.util.Date date=c.getTime();
+            Connection con = getConnection();
+            String sql = "SELECT curr_cal FROM user_perday_counter WHERE id=" + id +" and curr_date= '"+ df.format(date)+"'";
+            PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs = (ResultSet) stmt.executeQuery();
+            if(getSize(rs)==1){
+                return true;
+            }
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public UserCalorieCount fetchPreviousValue(int id) {
 
         UserCalorieCount userCalCount = new UserCalorieCount();
         Connection con = getConnection();
+        java.util.Date date=c.getTime();
         try{
-            String sql ="SELECT curr_cal, curr_proteins, curr_fiber FROM all_nutrients.user_perday_counter WHERE id=" + id;
+            String sql ="SELECT curr_cal, curr_proteins, curr_fiber FROM all_nutrients.user_perday_counter WHERE id=" + id
+                    + " and curr_date='"+df.format(date)+"'";
 
             PreparedStatement stmt= (PreparedStatement) con.prepareStatement(sql);
             ResultSet rs= (ResultSet) stmt.executeQuery();
