@@ -4,12 +4,16 @@ import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import model.ItemNutrient;
 import model.UserCalorieCount;
@@ -25,10 +29,18 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
     String email;
     String selItem;
     ItemNutrient itemNutrient;
+    TextInputLayout addQuan;
+    TextInputEditText addQuantity;
+    TextView calorieValue,proteinValue,fiberValue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_item_add);
+        addQuan=(TextInputLayout) findViewById(R.id.quantity);
+        addQuantity=(TextInputEditText) findViewById(R.id.AddQuantity);
+        calorieValue=(TextView) findViewById(R.id.caloriesValue);
+        proteinValue=(TextView)findViewById(R.id.protiensValue);
+        fiberValue=(TextView) findViewById(R.id.fiberValue);
         email = getIntent().getStringExtra("EMAIL");
         id=databaseHelper.getId(email);
         simpleSearchView=(SearchView)findViewById(R.id.searchView);
@@ -62,16 +74,31 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
     }
 
     public void onClick(View v) {
-        if(v.getId()==R.id.appCompatButtonCalculate){
-            itemNutrient=databaseHelper.fetchValuesForItem(selItem);
-            userCalCount=databaseHelper.fetchPreviousValue(id);
-            userCalCount.setId(id);
-            calculateNewValues();
-            databaseHelper.updateUserCalorieCountTable(userCalCount);
+        itemNutrient = databaseHelper.fetchValuesForItem(selItem.substring(0,selItem.indexOf(":")));
+        userCalCount = databaseHelper.fetchPreviousValue(id);
+        userCalCount.setId(id);
+        if(v.getId()==R.id.appCompatButtonCalculate) {
+
+            if (addQuantity.getText().toString() != null) {
+                Integer n = Integer.parseInt(addQuantity.getText().toString());
+                userCalCount.setTotal_cal(userCalCount.getTotal_cal()+(itemNutrient.getCalories() * n));
+                userCalCount.setTotal_fiber(userCalCount.getTotal_fiber()+(itemNutrient.getFiber() * n));
+                userCalCount.setTotal_protien(userCalCount.getTotal_protien()+(itemNutrient.getProtiens() * n));
+            }else{
+                calculateNewValues();
+            }
+            calorieValue.setText(String.valueOf(itemNutrient.getCalories()));
+            proteinValue.setText(String.valueOf(itemNutrient.getProtiens()));
+            fiberValue.setText(String.valueOf(itemNutrient.getFiber()));
+
         }
-        Intent intentRegister = new Intent(getApplicationContext(), MainActivity.class);
-        intentRegister.putExtra("EMAIL",email);
-        startActivity(intentRegister);
+        if(v.getId()==R.id.appCompatDone) {
+            databaseHelper.updateUserCalorieCountTable(userCalCount);
+
+            Intent intentRegister = new Intent(getApplicationContext(), MainActivity.class);
+            intentRegister.putExtra("EMAIL", email);
+            startActivity(intentRegister);
+        }
 
     }
 

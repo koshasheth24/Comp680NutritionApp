@@ -426,7 +426,7 @@ public class DatabaseHelper{
             int i=1;
             items.add("");
             while(rs.next()){
-                items.add(rs.getString("description")+", "+rs.getString("quantity_description"));
+                items.add(rs.getString("description")+": "+rs.getString("quantity_description"));
 
             }
         } catch (SQLException e) {
