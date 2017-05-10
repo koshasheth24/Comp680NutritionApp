@@ -173,7 +173,7 @@ public class DatabaseHelper{
             stmt.setString(5,user.getAddress());
 
             stmt.setDate(6, Date.valueOf(user.getDob()));
-            stmt.setInt(7, Integer.parseInt(user.getPhone()));
+            stmt.setLong(7, Long.parseLong(user.getPhone()));
             stmt.setDouble(8,user.getMax_cal());
             stmt.setDouble(9,user.getMax_protien());
             stmt.setDouble(10,user.getMax_fiber());
