@@ -38,5 +38,27 @@ public class LoginTest {
                 .perform(typeText(login), closeSoftKeyboard());
         onView(withId(R.id.textInputEditTextPassword)).perform(typeText(passwd), closeSoftKeyboard());
         onView(withId(R.id.appCompatButtonLogin)).perform(click());
+
+        /*ViewInteraction appCompatImageView = onView(
+                allOf(withClassName(is("android.support.v7.widget.AppCompatImageView")), withContentDescription("Search"),
+                        withParent(allOf(withClassName(is("android.widget.LinearLayout")),
+                                withParent(withId(R.id.searchView)))),
+                        isDisplayed()));
+        appCompatImageView.perform(click());
+
+        ViewInteraction searchAutoComplete = onView(
+                allOf(withClassName(is("android.widget.SearchView$SearchAutoComplete")),
+                        withParent(allOf(withClassName(is("android.widget.LinearLayout")),
+                                withParent(withClassName(is("android.widget.LinearLayout"))))),
+                        isDisplayed()));
+        searchAutoComplete.perform(replaceText("che"), closeSoftKeyboard());
+
+        ViewInteraction relativeLayout = onView(
+                allOf(childAtPosition(
+                        allOf(withId(R.id.listview),
+                                withParent(withId(R.id.textInputLayout))),
+                        0),
+                        isDisplayed()));
+        relativeLayout.perform(click());*/
     }
 }
