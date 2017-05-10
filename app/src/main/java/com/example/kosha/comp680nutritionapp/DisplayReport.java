@@ -9,16 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-import com.github.barteksc.pdfviewer.PDFView;
-import com.github.barteksc.pdfviewer.source.DocumentSource;
-import com.github.barteksc.pdfviewer.source.FileSource;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class DisplayReport extends AppCompatActivity {
-    PDFView pdfView;
+
     Intent intent;
 
     @Override
