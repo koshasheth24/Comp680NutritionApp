@@ -79,6 +79,13 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
         userCalCount.setId(id);
         if(v.getId()==R.id.appCompatButtonCalculate) {
 
+
+            calorieValue.setText(String.valueOf(itemNutrient.getCalories()));
+            proteinValue.setText(String.valueOf(itemNutrient.getProtiens()));
+            fiberValue.setText(String.valueOf(itemNutrient.getFiber()));
+
+        }
+        if(v.getId()==R.id.appCompatDone) {
             if (addQuantity.getText().toString() != null) {
                 Integer n = Integer.parseInt(addQuantity.getText().toString());
                 userCalCount.setTotal_cal(userCalCount.getTotal_cal()+(itemNutrient.getCalories() * n));
@@ -87,12 +94,6 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
             }else{
                 calculateNewValues();
             }
-            calorieValue.setText(String.valueOf(itemNutrient.getCalories()));
-            proteinValue.setText(String.valueOf(itemNutrient.getProtiens()));
-            fiberValue.setText(String.valueOf(itemNutrient.getFiber()));
-
-        }
-        if(v.getId()==R.id.appCompatDone) {
             databaseHelper.updateUserCalorieCountTable(userCalCount);
 
             Intent intentRegister = new Intent(getApplicationContext(), MainActivity.class);

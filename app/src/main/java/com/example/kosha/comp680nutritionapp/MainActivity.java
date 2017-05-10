@@ -3,8 +3,10 @@ package com.example.kosha.comp680nutritionapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,12 +26,14 @@ public class MainActivity extends AppCompatActivity
     DatabaseHelper databaseHelper=new DatabaseHelper();
     TextView cal,pro,fiber;
     int id;
-
+    NestedScrollView nestedScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        nestedScrollView=(NestedScrollView) findViewById(R.id.nestedScrollView);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -67,6 +71,25 @@ public class MainActivity extends AppCompatActivity
         cal.setText(String.valueOf(user.getMax_cal()-userCalCount.getTotal_cal()));
         pro.setText(String.valueOf(user.getMax_protien()-userCalCount.getTotal_protien()));
         fiber.setText(String.valueOf(user.getMax_fiber()-userCalCount.getTotal_fiber()));
+
+        StringBuilder notification=new StringBuilder("You have consumed extra ");
+        int i=0;
+        if((user.getMax_cal()-userCalCount.getTotal_cal())<0){
+            notification.append("Calories");
+            i=i+1;
+        }
+        if((user.getMax_protien()-userCalCount.getTotal_protien())<0){
+            notification.append(" Proteins");
+            i=i+1;
+        }
+        if((user.getMax_fiber()-userCalCount.getTotal_fiber())<0){
+            notification.append("Fiber");
+            i=i+1;
+        }
+        if(i>0){
+            Snackbar.make(nestedScrollView,notification,Snackbar.LENGTH_LONG).show();
+        }
+
     }
 
     @Override
