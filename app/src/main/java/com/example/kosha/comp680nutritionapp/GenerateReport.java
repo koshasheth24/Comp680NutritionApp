@@ -99,14 +99,12 @@ public class GenerateReport extends AppCompatActivity {
             document.open();
             document.addTitle("Report");
             PdfPTable table = createFirstTable();
-            table.setWidthPercentage(75);
+            table.setWidthPercentage(90);
             table.setHorizontalAlignment(Element.ALIGN_CENTER);
             document.add(table);
             document.close();
             writer.close();
 
-           // PDFView pdfView=(PDFView) findViewById(R.id.pdfView);
-           // pdfView.fromFile(myFile).load();
         } catch (DocumentException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -122,8 +120,6 @@ public class GenerateReport extends AppCompatActivity {
             createPdf();
 
             Intent intent = new Intent(getApplicationContext(),DisplayReport.class);
-           // intent.setDataAndType(Uri.fromFile(myFile), "application/pdf");
-           // intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             intent.putExtra("FILE_PATH",pdfFolder + timeStamp + ".pdf");
             startActivity(intent);
         }else if(V.getId()==R.id.generatePdf){
