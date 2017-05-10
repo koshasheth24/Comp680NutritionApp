@@ -1,4 +1,5 @@
 package com.example.kosha.comp680nutritionapp;
+import com.github.barteksc.pdfviewer.PDFView;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -6,7 +7,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Environment;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.io.File;
@@ -41,6 +40,9 @@ public class GenerateReport extends AppCompatActivity {
     AppCompatButton exportToPDF,generateResults;
     TextInputLayout dateFromWid,dateToWid;
     File myFile;
+    Date date=new Date();
+    String timeStamp=new SimpleDateFormat("yyyyMMdd_HHmmss").format(date);
+    File pdfFolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,22 +87,26 @@ public class GenerateReport extends AppCompatActivity {
     }
 
     private void createPdf() {
-        File pdfFolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),"Report");
+        pdfFolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),"Report");
+
         if(!pdfFolder.exists()){
             pdfFolder.mkdir();
         }
         try {
-        Date date=new Date();
-        String timeStamp=new SimpleDateFormat("yyyyMMdd_HHmmss").format(date);
         myFile = new File(pdfFolder + timeStamp + ".pdf");
-        Document document = new Document();
+            Document document = new Document();
             PdfWriter writer=PdfWriter.getInstance(document, new FileOutputStream(myFile));
             document.open();
+            document.addTitle("Report");
             PdfPTable table = createFirstTable();
             table.setWidthPercentage(75);
             table.setHorizontalAlignment(Element.ALIGN_CENTER);
             document.add(table);
             document.close();
+            writer.close();
+
+           // PDFView pdfView=(PDFView) findViewById(R.id.pdfView);
+           // pdfView.fromFile(myFile).load();
         } catch (DocumentException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -110,16 +116,15 @@ public class GenerateReport extends AppCompatActivity {
 
     public void onClick(View V){
 
-
-
-
         userCalorieCountArrayList=databaseHelper.fetchCurrValuesForReport(id,dateFrom.getText().toString(),dateTo.getText().toString());
 
         if(V.getId()==R.id.exportToPdf) {
             createPdf();
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.fromFile(myFile), "application/pdf");
-            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+            Intent intent = new Intent(getApplicationContext(),DisplayReport.class);
+           // intent.setDataAndType(Uri.fromFile(myFile), "application/pdf");
+           // intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            intent.putExtra("FILE_PATH",pdfFolder + timeStamp + ".pdf");
             startActivity(intent);
         }else if(V.getId()==R.id.generatePdf){
             displayResult();

@@ -67,5 +67,12 @@
             android:background="@color/colorTextHint"
             android:onClick="onClick"
             android:text="@string/export_to_pdf" />
+        <com.github.barteksc.pdfviewer.PDFView
+            android:id="@+id/pdfView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp" />
     </android.support.v7.widget.LinearLayoutCompat>
     </android.support.v4.widget.NestedScrollView>
