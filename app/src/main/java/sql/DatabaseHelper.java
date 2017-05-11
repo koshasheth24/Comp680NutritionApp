@@ -460,7 +460,7 @@ public class DatabaseHelper{
 
     public ArrayList<UserCalorieCount> fetchCurrValuesForReport(int id, String fromDate, String toDate) {
         ArrayList<UserCalorieCount> userCalCountList = new ArrayList<>();
-        userCalCount=new UserCalorieCount();
+
         Connection con = getConnection();
         try{
             String sql ="SELECT curr_cal, curr_proteins, curr_fiber, curr_date FROM " +
@@ -469,7 +469,7 @@ public class DatabaseHelper{
             PreparedStatement stmt= (PreparedStatement) con.prepareStatement(sql);
             ResultSet rs= (ResultSet) stmt.executeQuery();
             while(rs.next()) {
-
+                userCalCount=new UserCalorieCount();
                 userCalCount.setTotal_cal(rs.getDouble("curr_cal"));
                 userCalCount.setTotal_fiber(rs.getDouble("curr_fiber"));
                 userCalCount.setTotal_protien(rs.getDouble("curr_proteins"));
